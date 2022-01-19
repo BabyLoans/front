@@ -29,3 +29,7 @@ Next, start your development server for the front-end:
 ## Deployment
 
 Coming soon...
+
+## Workflows
+See our workflows in .github/worflows our see our passed badges
+[![GitHub Super-Linter](https://github.com/BabyLoans/front/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
