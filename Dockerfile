@@ -3,11 +3,12 @@ FROM node:latest as builder
 WORKDIR /app
 
 COPY package.json package.json
-RUN npm ci --production
+COPY yarn.lock yarn.lock
+RUN yarn install --frozen-lockfile
 
 COPY . .
 
-RUN npm run build
+RUN yarn run build
 
 
 FROM nginx:1.14-alpine as prod
