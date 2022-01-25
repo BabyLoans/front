@@ -13,7 +13,7 @@ RUN yarn run build
 
 FROM nginx:1.14-alpine as prod
 
-COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/build /usr/share/nginx/html
 
 CMD [ "nginx", "-g", "daemon off;" ]
