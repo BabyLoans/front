@@ -32,7 +32,7 @@ const Application = () => {
 
 ReactDOM.render(
   <StrictMode>
-    <Application />,
+    <Application />
   </StrictMode>,
   document.getElementById("root")
 );

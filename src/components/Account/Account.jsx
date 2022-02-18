@@ -1,13 +1,14 @@
-import { useMoralis } from "react-moralis";
-import { getEllipsisTxt } from "helpers/formatters";
-import Blockie from "../Blockie";
-import { Button, Card, Modal } from "antd";
 import { useState } from "react";
-import Address from "../Address/Address";
-import { SelectOutlined } from "@ant-design/icons";
-import { getExplorer } from "helpers/networks";
-import Text from "antd/lib/typography/Text";
+import Blockie from "../Blockie";
 import { connectors } from "./config";
+import Address from "../Address/Address";
+import { Button, Card, Modal } from "antd";
+import { useMoralis } from "react-moralis";
+import Text from "antd/lib/typography/Text";
+import { getExplorer } from "helpers/networks";
+import { SelectOutlined } from "@ant-design/icons";
+import { getEllipsisTxt } from "helpers/formatters";
+
 const styles = {
   account: {
     height: "42px",
@@ -98,22 +99,6 @@ function Account() {
 
   return (
     <>
-      {/* <button
-        onClick={async () => {
-          try {
-            console.log("change")
-            await web3._provider.request({
-              method: "wallet_switchEthereumChain",
-              params: [{ chainId: "0x38" }],
-            });
-            console.log("changed")
-          } catch (e) {
-            console.error(e);
-          }
-        }}
-      >
-        Hi
-      </button> */}
       <div style={styles.account} onClick={() => setIsModalVisible(true)}>
         <p style={{ marginRight: "5px", ...styles.text }}>{getEllipsisTxt(account, 6)}</p>
         <Blockie currentWallet scale={3} />
