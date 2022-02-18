@@ -23,6 +23,7 @@ const styles = {
   },
   text: {
     color: "#21BF96",
+    margin: "0px 10px",
   },
   connector: {
     alignItems: "center",

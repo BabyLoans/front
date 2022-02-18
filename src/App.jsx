@@ -3,13 +3,14 @@ import React from "react";
 import "antd/dist/antd.css";
 import { Layout, Menu } from "antd";
 import Loans from "./pages/Loans";
+import Settings from "./pages/Settings";
 import Dashboard from "./pages/Dashboard";
 import { useMoralis } from "react-moralis";
 import Text from "antd/lib/typography/Text";
 import TokenPrice from "components/TokenPrice";
 import Account from "components/Account/Account";
-import { HomeOutlined, PieChartOutlined } from "@ant-design/icons";
 import { BrowserRouter as Router, Switch, Route, Redirect, Link } from "react-router-dom";
+import { HomeOutlined, PieChartOutlined, MenuOutlined, BellOutlined, SettingOutlined } from "@ant-design/icons";
 
 const { Header, Footer, Sider } = Layout;
 
@@ -36,11 +37,12 @@ const styles = {
     boxShadow: "0 1px 10px rgb(151 164 175 / 10%)",
   },
   headerRight: {
-    display: "flex",
     gap: "20px",
-    alignItems: "center",
+    display: "flex",
     fontSize: "15px",
     fontWeight: "600",
+    alignItems: "center",
+    justifyContent: "space-around",
   },
   siderMenu: {
     width: "100%",
@@ -79,6 +81,9 @@ const App = () => {
               <Menu.Item key="item_move_to_loans">
                 <Link to='/loans' onClick={() => setActualPage("Supply / Borrow")}><PieChartOutlined /></Link>
               </Menu.Item>
+              <Menu.Item key="item_move_to_settings">
+                <Link to='/settings' onClick={() => setActualPage("Settings")}><SettingOutlined /></Link>
+              </Menu.Item>
             </Menu.ItemGroup>
           </Menu>
         </Sider>
@@ -87,7 +92,11 @@ const App = () => {
               <Text style={{ fontSize: "16px", fontWeight: "bold" }}>
                 {actualPage}
               </Text>
-              <Account />
+              <div style={styles.headerRight}>
+                <BellOutlined />
+                <Account />
+                <MenuOutlined />
+              </div>
             </Header>
             <div style={styles.content}>
               <Switch>
@@ -96,6 +105,9 @@ const App = () => {
                 </Route>
                 <Route path="/loans">
                   <Loans />
+                </Route>
+                <Route path="/settings">
+                  <Settings />
                 </Route>
                 <Route path="/">
                   <Redirect to="/dashboard" />
