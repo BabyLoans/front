@@ -9,8 +9,21 @@ import { useMoralis } from "react-moralis";
 import Text from "antd/lib/typography/Text";
 import TokenPrice from "components/TokenPrice";
 import Account from "components/Account/Account";
-import { BrowserRouter as Router, Switch, Route, Redirect, Link } from "react-router-dom";
-import { HomeOutlined, PieChartOutlined, MenuOutlined, BellOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+  Link,
+} from "react-router-dom";
+import {
+  HomeOutlined,
+  PieChartOutlined,
+  MenuOutlined,
+  BellOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
+import { Content } from "antd/lib/layout/layout";
 
 const { Header, Footer, Sider } = Layout;
 
@@ -20,7 +33,7 @@ const styles = {
     justifyContent: "center",
     fontFamily: "Roboto, sans-serif",
     color: "#041836",
-    marginTop: "130px",
+    marginTop: "2em",
     padding: "10px",
   },
   header: {
@@ -48,16 +61,18 @@ const styles = {
     width: "100%",
     height: "100%",
     textAlign: "center",
-  }
+  },
 };
 const App = () => {
-  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } = useMoralis();
+  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
+    useMoralis();
 
   const [actualPage, setActualPage] = React.useState("Dashboard");
 
   React.useEffect(() => {
     const connectorId = window.localStorage.getItem("connectorId");
-    if (isAuthenticated && !isWeb3Enabled && !isWeb3EnableLoading) enableWeb3({ provider: connectorId });
+    if (isAuthenticated && !isWeb3Enabled && !isWeb3EnableLoading)
+      enableWeb3({ provider: connectorId });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, isWeb3Enabled]);
 
@@ -66,7 +81,7 @@ const App = () => {
       <Router>
         <Sider width={100}>
           <Menu style={styles.siderMenu}>
-            <Menu.Item key="item_bbl_price" style={{marginTop: "1em"}}>
+            <Menu.Item key="item_bbl_price" style={{ marginTop: "1em" }}>
               <TokenPrice
                 address="0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
                 chain="bsc"
@@ -76,49 +91,60 @@ const App = () => {
             </Menu.Item>
             <Menu.ItemGroup>
               <Menu.Item key="item_move_to_dashboard">
-                <Link to='/dashboard' onClick={() => setActualPage("Dashboard")}><HomeOutlined /></Link>
+                <Link
+                  to="/dashboard"
+                  onClick={() => setActualPage("Dashboard")}
+                >
+                  <HomeOutlined />
+                </Link>
               </Menu.Item>
               <Menu.Item key="item_move_to_loans">
-                <Link to='/loans' onClick={() => setActualPage("Supply / Borrow")}><PieChartOutlined /></Link>
+                <Link
+                  to="/loans"
+                  onClick={() => setActualPage("Supply / Borrow")}
+                >
+                  <PieChartOutlined />
+                </Link>
               </Menu.Item>
               <Menu.Item key="item_move_to_settings">
-                <Link to='/settings' onClick={() => setActualPage("Settings")}><SettingOutlined /></Link>
+                <Link to="/settings" onClick={() => setActualPage("Settings")}>
+                  <SettingOutlined />
+                </Link>
               </Menu.Item>
             </Menu.ItemGroup>
           </Menu>
         </Sider>
         <Layout>
           <Header style={styles.header}>
-              <Text style={{ fontSize: "16px", fontWeight: "bold" }}>
-                {actualPage}
-              </Text>
-              <div style={styles.headerRight}>
-                <BellOutlined />
-                <Account />
-                <MenuOutlined />
-              </div>
-            </Header>
-            <div style={styles.content}>
-              <Switch>
-                <Route path="/dashboard">
-                  <Dashboard />
-                </Route>
-                <Route path="/loans">
-                  <Loans />
-                </Route>
-                <Route path="/settings">
-                  <Settings />
-                </Route>
-                <Route path="/">
-                  <Redirect to="/dashboard" />
-                </Route>
-                <Route path="/nonauthenticated">
-                  <>Please login using the "Authenticate" button</>
-                </Route>
-              </Switch>
+            <Text style={{ fontSize: "16px", fontWeight: "bold" }}>
+              {actualPage}
+            </Text>
+            <div style={styles.headerRight}>
+              <BellOutlined />
+              <Account />
+              <MenuOutlined />
             </div>
-          <Footer style={{ textAlign: "center" }}>
-          </Footer>
+          </Header>
+          <Content style={styles.content}>
+            <Switch>
+              <Route path="/dashboard">
+                <Dashboard />
+              </Route>
+              <Route path="/loans">
+                <Loans />
+              </Route>
+              <Route path="/settings">
+                <Settings />
+              </Route>
+              <Route path="/">
+                <Redirect to="/dashboard" />
+              </Route>
+              <Route path="/nonauthenticated">
+                <>Please login using the "Authenticate" button</>
+              </Route>
+            </Switch>
+          </Content>
+          <Footer style={{ textAlign: "center" }}></Footer>
         </Layout>
       </Router>
     </Layout>
