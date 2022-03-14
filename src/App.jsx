@@ -25,7 +25,7 @@ import {
 } from "@ant-design/icons";
 import { Content } from "antd/lib/layout/layout";
 
-const { Header, Footer, Sider } = Layout;
+const { Header, Sider } = Layout;
 
 const styles = {
   content: {
@@ -33,8 +33,9 @@ const styles = {
     justifyContent: "center",
     fontFamily: "Roboto, sans-serif",
     color: "#041836",
-    marginTop: "2em",
-    padding: "10px",
+    padding: "0px 10px 0px 10px",
+    maxHeight: "100vh",
+    overflow: "auto",
   },
   header: {
     position: "static",
@@ -144,7 +145,6 @@ const App = () => {
               </Route>
             </Switch>
           </Content>
-          <Footer style={{ textAlign: "center" }}></Footer>
         </Layout>
       </Router>
     </Layout>
