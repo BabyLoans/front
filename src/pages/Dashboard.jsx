@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Layout, Typography, Card } from "antd";
-import BalanceChart from "../components/Charts/BalanceChart";
+import Balance from "components/Dashboard/Balance";
 
 const { Title } = Typography;
 
@@ -16,6 +16,22 @@ const styles = {
   },
 };
 
+const data = {
+  labels: ["BBL", "USDT", "BUSD", "USDC", "DAI"],
+  datasets: [
+    {
+      data: [125, 125, 125, 125, 125],
+      backgroundColor: [
+        "rgb(255, 99, 132)",
+        "rgb(54, 162, 235)",
+        "rgb(255, 205, 86)",
+        "rgb(49, 12, 86)",
+        "rgb(12, 12, 12)",
+      ],
+    },
+  ],
+};
+
 function Dashboard() {
   return (
     <Layout>
@@ -26,7 +42,7 @@ function Dashboard() {
             style={styles.balanceCard}
             bodyStyle={{ padding: "0px 24px 0px 24px" }}
           >
-            <BalanceChart />
+            <Balance data={data} />
           </Card>
         </Col>
         <Col className="gutter-row" span={12}>

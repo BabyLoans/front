@@ -3,73 +3,90 @@ import propTypes from "prop-types";
 import "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
 
-const margin = { left: 0, right: 100 };
-const legendBoxWidth = 14;
-
-const styles = {
-  root: {
-    textAlign: "center",
-    position: "relative",
-    height: "25vh",
-  },
-  overlay: {
-    position: "absolute",
-    top: 0,
-    right: margin.right - legendBoxWidth,
-    left: margin.left + legendBoxWidth,
-    bottom: 0,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
-    // This is important to preserve the chart interactivity
-    pointerEvents: "none",
-  },
-  total: {
-    fontSize: "3.5vh",
-    fontWeight: "bold",
-  },
-};
-
-const data = {
-  labels: ["BBL", "USDT", "BUSD", "USDC", "DAI"],
-  datasets: [
-    {
-      data: [125, 125, 125, 125, 125],
-      backgroundColor: [
-        "rgb(255, 99, 132)",
-        "rgb(54, 162, 235)",
-        "rgb(255, 205, 86)",
-        "rgb(49, 12, 86)",
-        "rgb(12, 12, 12)",
-      ],
-    },
-  ],
-};
-
-const options = {
-  responsive: true,
-  maintainAspectRatio: false,
-  hover: { mode: null },
-  tooltips: { enabled: false },
-  plugins: {
-    legend: {
-      position: "right",
-      labels: {
-        font: {
-          weight: "bold",
-        },
-        boxWidth: legendBoxWidth,
-      },
-      onClick: function () {
-        // Do nothing to override the parent function
-      },
-    },
-  },
-};
-
 const plugins = [
   {
+    beforeDraw: function (chart) {
+      var { ctx } = chart;
+
+      if (chart.config.options.elements.center) {
+        // Get options from the center object in options
+        var centerConfig = chart.config.options.elements.center;
+        var fontStyle = centerConfig.fontStyle || "Arial";
+        var txt = centerConfig.text;
+        var color = centerConfig.color || "#000";
+        var maxFontSize = centerConfig.maxFontSize || 75;
+        var sidePadding = centerConfig.sidePadding || 20;
+        var sidePaddingCalculated =
+          (sidePadding / 100) * (chart.innerRadius * 2);
+
+        ctx.font = "3.5vh " + fontStyle;
+
+        // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+        var stringWidth = ctx.measureText(txt).width;
+        var elementWidth = chart.innerRadius * 2 - sidePaddingCalculated;
+
+        // Find out how much the font can grow in width.
+        var widthRatio = elementWidth / stringWidth;
+        var newFontSize = Math.floor(30 * widthRatio);
+        var elementHeight = chart.innerRadius * 2;
+
+        // Pick a new font size so it will not be larger than the height of label.
+        var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
+        var minFontSize = centerConfig.minFontSize;
+        var lineHeight = centerConfig.lineHeight || 25;
+        var wrapText = false;
+
+        if (minFontSize === undefined) {
+          minFontSize = 20;
+        }
+
+        if (minFontSize && fontSizeToUse < minFontSize) {
+          fontSizeToUse = minFontSize;
+          wrapText = true;
+        }
+
+        // Set font settings to draw it correctly.
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        var centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+        var centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+        ctx.font = fontSizeToUse + "px " + fontStyle;
+        ctx.fillStyle = color;
+
+        if (!wrapText) {
+          ctx.fillText(txt, centerX, centerY);
+          return;
+        }
+
+        var words = txt.split(" ");
+        var line = "";
+        var lines = [];
+
+        // Break words up into multiple lines if necessary
+        for (var word of words) {
+          var lineWithWord = line + word + " ";
+          var wordWidth = ctx.measureText(lineWithWord).width;
+
+          if (wordWidth > elementWidth) {
+            lines.push(line);
+            line = word + " ";
+          } else {
+            line = lineWithWord;
+          }
+        }
+
+        // Move the center up depending on line height and number of lines
+        centerY -= (lines.length / 2) * lineHeight;
+
+        for (var lineToFill of lines) {
+          ctx.fillText(lineToFill, centerX, centerY);
+          centerY += lineHeight;
+        }
+
+        //Draw text in center
+        ctx.fillText(line, centerX, centerY);
+      }
+    },
     afterUpdate: function (chart) {
       let datasets = chart.getDatasetMeta(0);
 
@@ -111,29 +128,51 @@ const plugins = [
 ];
 
 function BalanceChart(props) {
-  let total = 0;
+  const { data, style, total } = props;
+  const legendFontSize = props.legendFontSize || 14;
 
-  data.datasets[0].data.forEach((value) => {
-    total += value;
-  });
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    hover: { mode: null },
+    tooltips: { enabled: false },
+    elements: {
+      center: {
+        text: `$${total}`,
+        fontStyle: "Arial",
+        sidePadding: 14,
+        maxFontSize: 20,
+        minFontSize: 20,
+        lineHeight: 20,
+      },
+    },
+    plugins: {
+      legend: {
+        position: "right",
+        labels: {
+          font: {
+            weight: "bold",
+            size: legendFontSize,
+          },
+          boxWidth: legendFontSize,
+        },
+        onClick: function () {
+          // Do nothing to override the parent function
+        },
+      },
+    },
+  };
 
   return (
-    <div style={styles.root}>
-      <Doughnut
-        data={data}
-        options={options}
-        plugins={plugins}
-        style={{ marginLeft: margin.left }}
-      />
-      <div style={styles.overlay}>
-        <span style={styles.total}>${total}</span>
-      </div>
-    </div>
+    <Doughnut data={data} options={options} plugins={plugins} style={style} />
   );
 }
 
 BalanceChart.propTypes = {
-  data: propTypes.array,
+  legendFontSize: propTypes.number,
+  data: propTypes.object.isRequired,
+  style: propTypes.object.isRequired,
+  total: propTypes.number.isRequired,
 };
 
 export default BalanceChart;
