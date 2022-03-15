@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Layout, Typography, Card } from "antd";
 import Balance from "components/Dashboard/Balance";
+import InvestmentStats from "components/Dashboard/InvestmentStats";
 
 const { Title } = Typography;
 
@@ -47,7 +48,9 @@ function Dashboard() {
         </Col>
         <Col className="gutter-row" span={12}>
           <Title level={5}>Investment Stats</Title>
-          <Card style={styles.card}></Card>
+          <Card style={styles.card}>
+            <InvestmentStats data={data} />
+          </Card>
         </Col>
         <Col className="gutter-row" span={6}>
           <Title level={5}>Best supply rates</Title>

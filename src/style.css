@@ -18,3 +18,11 @@
   overflow: auto;
   border-radius: 1rem;
 }
+
+.card-spacing {
+  margin-bottom: 1.5vh;
+}
+
+.test-div {
+  width: auto;
+}
