@@ -1,8 +1,10 @@
 import React from "react";
+import propTypes from "prop-types";
 import "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
 
 const margin = { left: 0, right: 100 };
+const legendBoxWidth = 14;
 
 const styles = {
   root: {
@@ -13,8 +15,8 @@ const styles = {
   overlay: {
     position: "absolute",
     top: 0,
-    right: margin.right,
-    left: margin.left,
+    right: margin.right - legendBoxWidth,
+    left: margin.left + legendBoxWidth,
     bottom: 0,
     display: "flex",
     alignItems: "center",
@@ -33,7 +35,6 @@ const data = {
   labels: ["BBL", "USDT", "BUSD", "USDC", "DAI"],
   datasets: [
     {
-      label: "My First Dataset",
       data: [125, 125, 125, 125, 125],
       backgroundColor: [
         "rgb(255, 99, 132)",
@@ -42,7 +43,6 @@ const data = {
         "rgb(49, 12, 86)",
         "rgb(12, 12, 12)",
       ],
-      hoverOffset: 4,
     },
   ],
 };
@@ -55,6 +55,15 @@ const options = {
   plugins: {
     legend: {
       position: "right",
+      labels: {
+        font: {
+          weight: "bold",
+        },
+        boxWidth: legendBoxWidth,
+      },
+      onClick: function () {
+        // Do nothing to override the parent function
+      },
     },
   },
 };
@@ -117,10 +126,14 @@ function BalanceChart(props) {
         style={{ marginLeft: margin.left }}
       />
       <div style={styles.overlay}>
-        <span style={styles.total}>$ {total}</span>
+        <span style={styles.total}>${total}</span>
       </div>
     </div>
   );
 }
+
+BalanceChart.propTypes = {
+  data: propTypes.array,
+};
 
 export default BalanceChart;
