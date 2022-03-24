@@ -2,22 +2,11 @@ import React from "react";
 import { Row, Col, Layout, Typography, Card } from "antd";
 import Balance from "components/Dashboard/Balance";
 import InvestmentStats from "components/Dashboard/InvestmentStats";
+import { WalletOutlined, CalendarOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 
-const styles = {
-  balanceCard: {
-    width: "100%",
-    borderRadius: "5px",
-  },
-  card: {
-    width: "100%",
-    padding: "8px 0",
-    borderRadius: "5px",
-  },
-};
-
-const data = {
+const dashboardData = {
   labels: ["BBL", "USDT", "BUSD", "USDC", "DAI"],
   datasets: [
     {
@@ -33,6 +22,28 @@ const data = {
   ],
 };
 
+const investmentStatsData = {
+  labels: [
+    "Total investments",
+    "Weekly returns",
+    "Monthly returns",
+    "Total returns",
+  ],
+  icons: [WalletOutlined, CalendarOutlined, CalendarOutlined, CalendarOutlined],
+  datasets: [
+    {
+      data: [500, 3.58, 14.32, 56.14],
+      backgroundColor: [
+        "rgba(238, 184, 11, 1)",
+        "rgba(83, 0, 255, 1)",
+        "rgba(83, 0, 255, 1)",
+        "rgba(83, 0, 255, 1)",
+      ],
+      barPercentage: 0.5,
+    },
+  ],
+};
+
 function Dashboard() {
   return (
     <Layout>
@@ -40,38 +51,38 @@ function Dashboard() {
         <Col className="gutter-row" span={12}>
           <Title level={5}>Balance</Title>
           <Card
-            style={styles.balanceCard}
+            className="dashboard-balance-card"
             bodyStyle={{ padding: "0px 24px 0px 24px" }}
           >
-            <Balance data={data} />
+            <Balance data={dashboardData} />
           </Card>
         </Col>
         <Col className="gutter-row" span={12}>
           <Title level={5}>Investment Stats</Title>
-          <Card style={styles.card}>
-            <InvestmentStats data={data} />
+          <Card className="dashboard-card">
+            <InvestmentStats data={investmentStatsData} />
           </Card>
         </Col>
         <Col className="gutter-row" span={6}>
           <Title level={5}>Best supply rates</Title>
           <Row gutter={[0, 10]}>
             <Col className="gutter-row" span={24}>
-              <Card style={styles.card}></Card>
+              <Card className="dashboard-card"></Card>
             </Col>
             <Col className="gutter-row" span={24}>
-              <Card style={styles.card}></Card>
+              <Card className="dashboard-card"></Card>
             </Col>
             <Col className="gutter-row" span={24}>
-              <Card style={styles.card}></Card>
+              <Card className="dashboard-card"></Card>
             </Col>
             <Col className="gutter-row" span={24}>
-              <Card style={styles.card}></Card>
+              <Card className="dashboard-card"></Card>
             </Col>
           </Row>
         </Col>
         <Col className="gutter-row" span={18}>
           <Title level={5}>Daily profits</Title>
-          <Card style={styles.card}></Card>
+          <Card className="dashboard-card"></Card>
         </Col>
       </Row>
     </Layout>
