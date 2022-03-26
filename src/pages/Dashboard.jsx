@@ -39,7 +39,6 @@ const investmentStatsData = {
         "rgba(83, 0, 255, 1)",
         "rgba(83, 0, 255, 1)",
       ],
-      barPercentage: 0.5,
     },
   ],
 };

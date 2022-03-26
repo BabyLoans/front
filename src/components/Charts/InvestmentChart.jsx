@@ -4,6 +4,7 @@ import { Bar } from "react-chartjs-2";
 
 const options = {
   responsive: true,
+  barPercentage: 0.2,
   maintainAspectRatio: false,
   plugins: {
     legend: {
