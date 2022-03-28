@@ -27,14 +27,14 @@ function BestSupplyRate(props) {
   const datasets = buildDatasetsFromDatas(datas);
 
   return (
-    <Row className="">
+    <Row className="best-supply-rate-row">
       <Col className="best-supply-rate-image">
         <Image src={datas.logoUrl} width={20} />
       </Col>
-      <Col className="best-supply-rate-name">
+      <Col offset={1}>
         <h3>{datas.symbol}</h3>
       </Col>
-      <Col>
+      <Col offset={1} span={15}>
         <Row>
           <BestSupplyRateChart data={datasets} />
         </Row>
