@@ -12,19 +12,41 @@ const styles = {
   },
 };
 
+function buildDatasetsFromDatas(datas) {
+  const datasets = {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        backgroundColor: [],
+      },
+    ],
+  };
+
+  for (let data of datas) {
+    datasets.labels.push(data.symbol);
+    datasets.datasets[0].data.push(data.amount);
+    datasets.datasets[0].backgroundColor.push(data.color);
+  }
+
+  return datasets;
+}
+
 function Balance(props) {
   let total = 0;
 
-  const { data } = props;
+  const { datas } = props;
 
-  data.datasets[0].data.forEach((value) => {
+  const datasets = buildDatasetsFromDatas(datas);
+
+  datasets.datasets[0].data.forEach((value) => {
     total += value;
   });
 
   return (
     <div style={styles.root}>
       <BalanceChart
-        data={data}
+        data={datasets}
         total={total}
         legendFontSize={14}
         style={{ marginLeft: margin.left, marginRight: margin.right }}
@@ -35,7 +57,7 @@ function Balance(props) {
 }
 
 Balance.propTypes = {
-  data: propTypes.object.isRequired,
+  datas: propTypes.array.isRequired,
 };
 
 export default Balance;

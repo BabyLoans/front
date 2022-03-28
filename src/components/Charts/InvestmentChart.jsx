@@ -28,7 +28,7 @@ function InvestmentChart(props) {
 }
 
 InvestmentChart.propTypes = {
-  data: propTypes.array.isRequired,
+  data: propTypes.object.isRequired,
 };
 
 export default InvestmentChart;

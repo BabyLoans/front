@@ -24,7 +24,7 @@ function InvestmentInformation(props) {
 }
 
 InvestmentInformation.propTypes = {
-  LogoIcon: propTypes.element.isRequired,
+  LogoIcon: propTypes.object.isRequired,
   cardColor: propTypes.string.isRequired,
   cardTitle: propTypes.string.isRequired,
   cardAmount: propTypes.number.isRequired,

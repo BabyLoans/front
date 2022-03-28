@@ -21,7 +21,7 @@ function LogoCard(props) {
 }
 
 LogoCard.propTypes = {
-  LogoIcon: propTypes.element.isRequired,
+  LogoIcon: propTypes.object.isRequired,
   cardColor: propTypes.string.isRequired,
   cardLength: propTypes.number.isRequired,
 };

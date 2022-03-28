@@ -46,3 +46,17 @@
   padding: "8px 0";
   border-radius: "5px";
 }
+
+.best-supply-rate-image {
+  padding-top: 5px;
+}
+
+.best-supply-rate-row {
+  align-items: center;
+}
+
+.best-supply-rate-percent {
+  color: #4fdfb1;
+  width: 100%;
+  text-align: center;
+}
