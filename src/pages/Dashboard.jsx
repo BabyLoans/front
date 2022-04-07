@@ -37,45 +37,47 @@ function Dashboard() {
       {isLoading ? (
         <Spin />
       ) : (
-        <Row gutter={[16, 20]}>
-          <Col className="gutter-row" span={12}>
-            <Title level={5}>Balance</Title>
-            <Card
-              className="dashboard-balance-card"
-              bodyStyle={{ padding: "0px 24px 0px 24px" }}
-            >
-              <Balance datas={balance} />
-            </Card>
-          </Col>
-          <Col className="gutter-row" span={12}>
-            <Title level={5}>Investment Stats</Title>
-            <Card className="dashboard-card">
-              <InvestmentStats datas={investmentStats} />
-            </Card>
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <Title level={5}>Best supply rates</Title>
-            <Row gutter={[0, 10]}>
-              {bestSupplyRates.map((token) => {
-                return (
-                  <Col
-                    className="gutter-row"
-                    span={24}
-                    key={"best_rate_" + token.id}
-                  >
-                    <Card className="dashboard-card">
-                      <BestSupplyRate datas={token} />
-                    </Card>
-                  </Col>
-                );
-              })}
-            </Row>
-          </Col>
-          <Col className="gutter-row" span={18}>
-            <Title level={5}>Daily profits</Title>
-            <Card className="dashboard-card"></Card>
-          </Col>
-        </Row>
+        <>
+          <br />
+          <Row gutter={[20, 20]}>
+            <Col className="gutter-row" span={10}>
+              <Title className="dashboard-title-card">Balance</Title>
+              <Card
+                className="dashboard-card"
+              >
+                <Balance datas={balance} />
+              </Card>
+            </Col>
+            <Col className="gutter-row" span={10}>
+              <Title className="dashboard-title-card">Investment Stats</Title>
+              <Card className="dashboard-card">
+                <InvestmentStats datas={investmentStats} />
+              </Card>
+            </Col>
+            <Col className="gutter-row" span={5}>
+              <Title className="dashboard-title-card">Best supply rates</Title>
+              <Row gutter={[0, 10]}>
+                {bestSupplyRates.map((token) => {
+                  return (
+                    <Col
+                      className="gutter-row"
+                      span={24}
+                      key={"best_rate_" + token.id}
+                    >
+                      <Card className="dashboard-card">
+                        <BestSupplyRate datas={token} />
+                      </Card>
+                    </Col>
+                  );
+                })}
+              </Row>
+            </Col>
+            <Col className="gutter-row" span={15}>
+              <Title className="dashboard-title-card">Daily profits</Title>
+              <Card className="dashboard-card"></Card>
+            </Col>
+          </Row>
+        </>
       )}
     </Layout>
   );

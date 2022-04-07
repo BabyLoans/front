@@ -12,7 +12,7 @@ function LogoCard(props) {
         borderRadius: 2.45,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: cardColor,
+        color: cardColor,
       }}
     >
       <LogoIcon style={{ fontSize: cardLength / 1.5 }} />

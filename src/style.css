@@ -28,7 +28,8 @@
 }
 
 .investment-stat-card-title {
-  font-family: "Roboto", sans-serif;
+  font-family: "Verdana";
+  font-weight: bolder;
   margin-bottom: 0;
 }
 
@@ -39,6 +40,12 @@
 .dashboard-balance-card {
   width: "100%";
   border-radius: "5px";
+}
+
+.ant-typography.dashboard-title-card {
+  font-family: "Verdana";
+  font-weight: bolder;
+  font-size: 17px;
 }
 
 .dashboard-card {

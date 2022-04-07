@@ -7,7 +7,9 @@ import { WalletOutlined, CalendarOutlined } from "@ant-design/icons";
 
 function buildDatasetsFromDatas(datas) {
   const datasets = {
-    labels: [],
+    labels: [
+      
+    ],
     icons: [],
     datasets: [
       {

@@ -7,19 +7,22 @@ function InvestmentInformation(props) {
   const { LogoIcon, cardColor, cardLength, cardTitle, cardAmount } = props;
 
   return (
-    <Row>
-      <Col className="test-div card-spacing">
-        <LogoCard
-          LogoIcon={LogoIcon}
-          cardColor={cardColor}
-          cardLength={cardLength}
-        />
-      </Col>
-      <Col className="investment-stat-card-text">
-        <h5 className="investment-stat-card-title">{cardTitle}</h5>
-        <span style={{ color: cardColor }}>$ {cardAmount}</span>
-      </Col>
-    </Row>
+    <>
+      <Row>
+        <Col className="test-div card-spacing">
+          <LogoCard
+            LogoIcon={LogoIcon}
+            cardColor={cardColor}
+            cardLength={cardLength}
+          />
+        </Col>
+        <Col className="investment-stat-card-text">
+          <h5 className="investment-stat-card-title">{cardTitle}</h5>
+          <span style={{ color: cardColor, fontWeight: "bolder" }}>$ {cardAmount}</span>
+        </Col>
+      </Row>
+      <br />
+    </>
   );
 }
 

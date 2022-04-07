@@ -139,7 +139,7 @@ function BalanceChart(props) {
     elements: {
       center: {
         text: `$${total}`,
-        fontStyle: "Arial",
+        fontStyle: "Verdana",
         sidePadding: 14,
         maxFontSize: 20,
         minFontSize: 20,

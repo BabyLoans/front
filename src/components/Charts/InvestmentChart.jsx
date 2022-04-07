@@ -4,7 +4,7 @@ import { Bar } from "react-chartjs-2";
 
 const options = {
   responsive: true,
-  barPercentage: 0.2,
+  barPercentage: 0.5,
   maintainAspectRatio: false,
   plugins: {
     legend: {
@@ -13,10 +13,10 @@ const options = {
   },
   scales: {
     x: {
-      display: false,
+      display: true,
     },
     y: {
-      position: "right",
+      position: "left",
     },
   },
 };
