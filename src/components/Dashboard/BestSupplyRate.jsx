@@ -29,25 +29,24 @@ function BestSupplyRate(props) {
   return (
     <>
       <br /><br /><br />
-      <Row >
-        <Col>
-          <Badge pill color="dark" style={{ display: "block" }}>
-            <center>
-              <img
-                alt="logo coin"
-                className="img-center img-fluid"
-                src={datas.logoUrl}
-                style={{ width: "25px" }}
-              />
-              {datas.symbol}
-            </center>
-          </Badge>
+      <Row>
+        <Col md={1}></Col>
+        <Col md={2}>
+          <img
+            alt="logo coin"
+            className="img-center img-fluid"
+            src={datas.logoUrl}
+            style={{ width: "25px" }}
+          />
+          {datas.symbol}
         </Col>
-        <Col>
-          <BestSupplyRateChart data={datasets} />
-          <span className="best-supply-rate-percent">
-            {datas.rates[0].value} %
-          </span>
+        <Col md={8}>
+          <Badge pill color="dark" style={{ display: "block" }}>
+            <BestSupplyRateChart data={datasets} />
+            <span className="best-supply-rate-percent">
+              {datas.rates[0].value} %
+            </span>
+          </Badge>
         </Col>
       </Row>
     </>
