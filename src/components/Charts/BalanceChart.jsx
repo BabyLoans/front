@@ -11,7 +11,7 @@ const plugins = [
       if (chart.config.options.elements.center) {
         // Get options from the center object in options
         var centerConfig = chart.config.options.elements.center;
-        var fontStyle = centerConfig.fontStyle || "Arial";
+        var fontStyle = centerConfig.fontStyle || "Verdana";
         var txt = centerConfig.text;
         var color = centerConfig.color || "#000";
         var maxFontSize = centerConfig.maxFontSize || 75;
@@ -87,43 +87,6 @@ const plugins = [
         ctx.fillText(line, centerX, centerY);
       }
     },
-    afterUpdate: function (chart) {
-      let datasets = chart.getDatasetMeta(0);
-
-      datasets.data.forEach((arc) => {
-        arc.round = {
-          x: (chart.chartArea.left + chart.chartArea.right) / 2,
-          y: (chart.chartArea.top + chart.chartArea.bottom) / 2,
-          radius: (arc.outerRadius + arc.innerRadius) / 2,
-          thickness: (arc.outerRadius - arc.innerRadius) / 2,
-          backgroundColor: arc.options.backgroundColor,
-        };
-      });
-    },
-    afterDraw: (chart) => {
-      let datasets = chart.getDatasetMeta(0);
-      let { ctx } = chart;
-
-      datasets.data.forEach((arc) => {
-        var startAngle = Math.PI / 2 - arc.startAngle;
-        ctx.save();
-        ctx.translate(arc.round.x, arc.round.y);
-        ctx.fillStyle = arc.options.backgroundColor;
-        ctx.beginPath();
-
-        ctx.arc(
-          arc.round.radius * Math.sin(startAngle),
-          arc.round.radius * Math.cos(startAngle),
-          arc.round.thickness / 1.05,
-          0,
-          2 * Math.PI
-        );
-
-        ctx.closePath();
-        ctx.fill();
-        ctx.restore();
-      });
-    },
   },
 ];
 
@@ -134,6 +97,8 @@ function BalanceChart(props) {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    cutout: "85%",
+    borderRadius: 30,
     hover: { mode: null },
     tooltips: { enabled: false },
     elements: {

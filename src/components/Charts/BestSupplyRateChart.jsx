@@ -23,7 +23,7 @@ const options = {
 function BestSupplyRateChart(props) {
   const { data } = props;
 
-  return <Line data={data} options={options} height={70} />;
+  return <Line data={data} options={options} height={25} />;
 }
 
 export default BestSupplyRateChart;

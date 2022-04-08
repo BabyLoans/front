@@ -1,13 +1,11 @@
 import "./style.css";
 import React from "react";
 import "antd/dist/antd.css";
-import { Layout, Menu } from "antd";
+import { Layout } from "antd";
 import Loans from "./pages/Loans";
 import Settings from "./pages/Settings";
 import Dashboard from "./pages/Dashboard";
 import { useMoralis } from "react-moralis";
-import Text from "antd/lib/typography/Text";
-import TokenPrice from "components/TokenPrice";
 import Account from "components/Account/Account";
 import {
   BrowserRouter as Router,
@@ -16,13 +14,10 @@ import {
   Redirect,
   Link,
 } from "react-router-dom";
-import {
-  HomeOutlined,
-  PieChartOutlined,
-  MenuOutlined,
-  BellOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome, faChartPie, faCogs, faBell, faBars } from "@fortawesome/free-solid-svg-icons";
+
 import { Content } from "antd/lib/layout/layout";
 
 const { Header, Sider } = Layout;
@@ -31,7 +26,7 @@ const styles = {
   content: {
     display: "flex",
     justifyContent: "center",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Verdana",
     color: "#041836",
     padding: "0px 10px 0px 10px",
     maxHeight: "100vh",
@@ -45,10 +40,9 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    fontFamily: "Raleway",
-    borderBottom: "2px solid rgba(0, 0, 0, 0.06)",
-    padding: "20px",
-    boxShadow: "0 1px 10px rgb(151 164 175 / 10%)",
+    fontFamily: "Verdana",
+    borderBottom: "5px solid rgba(0, 0, 0, 0.06)",
+    padding: "50px",
   },
   headerRight: {
     gap: "20px",
@@ -80,52 +74,35 @@ const App = () => {
   return (
     <Layout style={{ height: "100vh", overflow: "auto" }}>
       <Router>
-        <Sider width={100}>
-          <Menu style={styles.siderMenu}>
-            <Menu.Item key="item_bbl_price" style={{ marginTop: "1em" }}>
-              <TokenPrice
-                address="0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
-                chain="bsc"
-                image="https://upload.wikimedia.org/wikipedia/commons/5/57/Binance_Logo.png"
-                size="20px"
-              />
-            </Menu.Item>
-            <Menu.ItemGroup>
-              <Menu.Item key="item_move_to_dashboard">
-                <Link
-                  to="/dashboard"
-                  onClick={() => setActualPage("Dashboard")}
-                >
-                  <HomeOutlined />
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="item_move_to_loans">
-                <Link
-                  to="/loans"
-                  onClick={() => setActualPage("Supply / Borrow")}
-                >
-                  <PieChartOutlined />
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="item_move_to_settings">
-                <Link to="/settings" onClick={() => setActualPage("Settings")}>
-                  <SettingOutlined />
-                </Link>
-              </Menu.Item>
-            </Menu.ItemGroup>
-          </Menu>
-        </Sider>
         <Layout>
           <Header style={styles.header}>
-            <Text style={{ fontSize: "16px", fontWeight: "bold" }}>
-              {actualPage}
-            </Text>
+            <div style={{ display: "block" }}>
+              <img
+                className="img-fluid rounded-circle shadow"
+                src={require("assets/img/bbl_logo.png").default}
+                style={{ width: "50px" }}
+              />
+              <h3>
+                {actualPage}
+              </h3>
+            </div>
+           
             <div style={styles.headerRight}>
-              <BellOutlined />
+              <Link to="/dashboard" onClick={() => setActualPage("Dashboard")}>
+                <FontAwesomeIcon icon={faHome}/>
+              </Link>
+              <Link to="/loans" onClick={() => setActualPage("Supply / Borrow")}>
+                <FontAwesomeIcon icon={faChartPie}/>
+              </Link>
+              <Link to="/settings" onClick={() => setActualPage("Settings")}>
+                <FontAwesomeIcon icon={faCogs}/>
+              </Link>
+              <FontAwesomeIcon icon={faBell}/>
               <Account />
-              <MenuOutlined />
+              <FontAwesomeIcon icon={faBars}/>
             </div>
           </Header>
+
           <Content style={styles.content}>
             <Switch>
               <Route path="/dashboard">

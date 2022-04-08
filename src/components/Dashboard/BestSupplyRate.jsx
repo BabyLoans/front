@@ -1,6 +1,6 @@
 import React from "react";
 import propTypes from "prop-types";
-import { Row, Col, Image } from "antd";
+import { Row, Col, Badge } from "reactstrap";
 import BestSupplyRateChart from "components/Charts/BestSupplyRateChart";
 
 function buildDatasetsFromDatas(datas) {
@@ -27,24 +27,30 @@ function BestSupplyRate(props) {
   const datasets = buildDatasetsFromDatas(datas);
 
   return (
-    <Row className="best-supply-rate-row">
-      <Col className="best-supply-rate-image">
-        <Image src={datas.logoUrl} width={20} />
-      </Col>
-      <Col offset={1}>
-        <h3>{datas.symbol}</h3>
-      </Col>
-      <Col offset={1} span={15}>
-        <Row>
+    <>
+      <br /><br /><br />
+      <Row >
+        <Col>
+          <Badge pill color="dark" style={{ display: "block" }}>
+            <center>
+              <img
+                alt="logo coin"
+                className="img-center img-fluid"
+                src={datas.logoUrl}
+                style={{ width: "25px" }}
+              />
+              {datas.symbol}
+            </center>
+          </Badge>
+        </Col>
+        <Col>
           <BestSupplyRateChart data={datasets} />
-        </Row>
-        <Row>
           <span className="best-supply-rate-percent">
             {datas.rates[0].value} %
           </span>
-        </Row>
-      </Col>
-    </Row>
+        </Col>
+      </Row>
+    </>
   );
 }
 

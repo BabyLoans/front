@@ -56,7 +56,7 @@ function Account() {
         <div
           onClick={() => setIsAuthModalVisible(true)}
         >
-          <Button style={{ cursor: "crosshair" }}>Connect Wallet</Button>
+          <Button>Connect Wallet</Button>
         </div>
         <Modal
           visible={isAuthModalVisible}

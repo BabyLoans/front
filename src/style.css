@@ -24,7 +24,12 @@
 }
 
 .investment-stat-card-text {
+  display: contents;
   margin-left: 1rem;
+}
+
+.card-width {
+  height: 100%;
 }
 
 .investment-stat-card-title {
