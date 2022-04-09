@@ -12,7 +12,7 @@ import {
   Switch,
   Route,
   Redirect,
-  Link,
+  Link
 } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,7 +20,7 @@ import { faHome, faChartPie, faCogs, faBell, faBars } from "@fortawesome/free-so
 
 import { Content } from "antd/lib/layout/layout";
 
-const { Header, Sider } = Layout;
+const { Header } = Layout;
 
 const styles = {
   content: {
@@ -42,7 +42,7 @@ const styles = {
     alignItems: "center",
     fontFamily: "Verdana",
     borderBottom: "5px solid rgba(0, 0, 0, 0.06)",
-    padding: "50px",
+    padding: "30px",
   },
   headerRight: {
     gap: "20px",
@@ -76,30 +76,28 @@ const App = () => {
       <Router>
         <Layout>
           <Header style={styles.header}>
-            <div style={{ display: "block" }}>
+            <h4>
               <img
-                className="img-fluid rounded-circle shadow"
+                className="img-fluid rounded-circle"
                 src={require("assets/img/bbl_logo.png").default}
-                style={{ width: "50px" }}
+                style={{ width: "35px", display: "inline" }}
               />
-              <h3>
-                {actualPage}
-              </h3>
-            </div>
+              { ' '}
+              {actualPage}
+            </h4>
            
             <div style={styles.headerRight}>
-              <Link to="/dashboard" onClick={() => setActualPage("Dashboard")}>
+              <Link style={{ textDecoration: 'none', color: "rgba(0, 0, 0, 0.85)" }} to="/dashboard" onClick={() => setActualPage("Dashboard")}>
                 <FontAwesomeIcon icon={faHome}/>
               </Link>
-              <Link to="/loans" onClick={() => setActualPage("Supply / Borrow")}>
+              <Link style={{ textDecoration: 'none', color: "rgba(0, 0, 0, 0.85)" }} to="/loans" onClick={() => setActualPage("Supply / Borrow")}>
                 <FontAwesomeIcon icon={faChartPie}/>
               </Link>
-              <Link to="/settings" onClick={() => setActualPage("Settings")}>
+              <Link style={{ textDecoration: 'none', color: "rgba(0, 0, 0, 0.85)" }} to="/settings" onClick={() => setActualPage("Settings")}>
                 <FontAwesomeIcon icon={faCogs}/>
               </Link>
-              <FontAwesomeIcon icon={faBell}/>
+              {/* <FontAwesomeIcon icon={faBell}/> */}
               <Account />
-              <FontAwesomeIcon icon={faBars}/>
             </div>
           </Header>
 
