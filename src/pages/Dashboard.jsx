@@ -3,6 +3,7 @@ import Balance from "components/Dashboard/Balance";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBalanceScale, faHandHoldingUsd, faCalendarCheck, faNewspaper, faWallet } from "@fortawesome/free-solid-svg-icons";
 import {
+  Container,
   Card,
   CardBody,
   CardSubtitle,
@@ -46,8 +47,9 @@ function Dashboard() {
         <Spinner animation="border" variant="primary" />
       ) : (
         <>
+        <Container>
           <Row>
-            <Col md={4}> 
+            <Col md={6}> 
               <Card className="card-width">
                 <CardBody>
                   <CardTitle><h5> <FontAwesomeIcon icon={faBalanceScale} /> Balance</h5></CardTitle>
@@ -56,7 +58,7 @@ function Dashboard() {
                 </CardBody>
               </Card>
             </Col>
-            <Col md={5}> 
+            <Col md={6}> 
               <Card className="card-width">
                 <CardBody>
                   <CardTitle><h5> <FontAwesomeIcon icon={faWallet} /> Investment Stats</h5></CardTitle>
@@ -65,15 +67,7 @@ function Dashboard() {
                 </CardBody>
               </Card>
             </Col>
-            <Col md={3}> 
-              <Card className="card-width">
-                <CardBody>
-                  <CardTitle><h5> <FontAwesomeIcon icon={faNewspaper} /> News</h5></CardTitle>
-                  <CardSubtitle className="mb-2 text-muted">Card Subtitle</CardSubtitle>
-                  test
-                </CardBody>
-              </Card>
-            </Col>
+            
             <Col md={4}> 
               <Card className="card-width">
                 <CardBody>
@@ -101,6 +95,7 @@ function Dashboard() {
               </Card>
             </Col>
           </Row>
+          </Container>
         </>
       )}
     </>
