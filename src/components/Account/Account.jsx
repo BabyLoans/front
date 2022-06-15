@@ -56,13 +56,9 @@ function Account() {
   if (!isAuthenticated || !account) {
     return (
       <>
-        <div
-          onClick={() => setIsAuthModalVisible(true)}
-        >
-          <Button color="dark" size="sm"> 
-            <FontAwesomeIcon icon={faWallet} /> Connect Wallet
-          </Button>
-        </div>
+        <Button color="dark" size="sm" onClick={() => setIsAuthModalVisible(true)}> 
+          <FontAwesomeIcon icon={faWallet} /> Connect Wallet
+        </Button>
         <Modal
           visible={isAuthModalVisible}
           footer={null}

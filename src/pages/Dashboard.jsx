@@ -48,6 +48,7 @@ function Dashboard() {
       ) : (
         <>
         <Container>
+          <br />
           <Row>
             <Col md={6}> 
               <Card className="card-width">

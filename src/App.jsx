@@ -12,11 +12,11 @@ import {
   Redirect
 } from "react-router-dom";
 
-import HeaderNavbar from "components/Dashboard/HeaderNavbar";
+import HeaderNavbar from "components/HeaderNavbar";
 
 const App = () => {
   const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } = useMoralis();
-
+  
   React.useEffect(() => {
     const connectorId = window.localStorage.getItem("connectorId");
     if (isAuthenticated && !isWeb3Enabled && !isWeb3EnableLoading)
@@ -26,24 +26,24 @@ const App = () => {
 
   return (
     <Router>
-        <HeaderNavbar/>
-          <Switch>
-            <Route path="/dashboard">
-              <Dashboard />
-            </Route>
-            <Route path="/loans">
-              <Loans />
-            </Route>
-            <Route path="/settings">
-              <Settings />
-            </Route>
-            <Route path="/">
-              <Redirect to="/dashboard" />
-            </Route>
-            <Route path="/nonauthenticated">
-              <>Please login using the "Authenticate" button</>
-            </Route>
-          </Switch>
+      <HeaderNavbar/>
+      <Switch>
+        <Route path="/dashboard">
+          <Dashboard />
+        </Route>
+        <Route path="/loans">
+          <Loans />
+        </Route>
+        <Route path="/settings">
+          <Settings />
+        </Route>
+        <Route path="/">
+          <Redirect to="/dashboard" />
+        </Route>
+        <Route path="/nonauthenticated">
+          <>Please login using the "Authenticate" button</>
+        </Route>
+      </Switch>
     </Router>
   );
 };
