@@ -2,15 +2,8 @@ import React from "react";
 import Balance from "components/Dashboard/Balance";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBalanceScale, faHandHoldingUsd, faCalendarCheck, faNewspaper, faWallet } from "@fortawesome/free-solid-svg-icons";
-import {
-  Container,
-  Card,
-  CardBody,
-  CardSubtitle,
-  CardTitle,
-  Row,
-  Col, 
-  Spinner } from "reactstrap";
+import { Container, Card, CardBody, CardSubtitle, CardTitle, Row, Col, Spinner } from "reactstrap";
+import DailyProfit from "components/Charts/DailyProfitChart"; 
 import BestSupplyRate from "components/Dashboard/BestSupplyRate";
 import InvestmentStats from "components/Dashboard/InvestmentStats";
 import { UserBalance, BestSupplyRates, UserInvestmentStats } from "services";
@@ -44,7 +37,11 @@ function Dashboard() {
   return (
     <>
       {isLoading ? (
-        <Spinner animation="border" variant="primary" />
+        <>
+          <center>
+            <Spinner animation="border" variant="primary" />
+          </center>
+        </>
       ) : (
         <>
         <Container>
@@ -54,7 +51,7 @@ function Dashboard() {
               <Card className="card-width">
                 <CardBody>
                   <CardTitle><h5> <FontAwesomeIcon icon={faBalanceScale} /> Balance</h5></CardTitle>
-                  <CardSubtitle className="mb-2 text-muted">Card Subtitle</CardSubtitle><br />
+                  <CardSubtitle className="mb-2 text-muted">Overview of your wallet</CardSubtitle><br />
                   <Balance datas={balance} />
                 </CardBody>
               </Card>
@@ -63,17 +60,17 @@ function Dashboard() {
               <Card className="card-width">
                 <CardBody>
                   <CardTitle><h5> <FontAwesomeIcon icon={faWallet} /> Investment Stats</h5></CardTitle>
-                  <CardSubtitle className="mb-2 text-muted">Card Subtitle</CardSubtitle><br />
+                  <CardSubtitle className="mb-2 text-muted">Statistics of your return on investment</CardSubtitle><br />
                   <InvestmentStats datas={investmentStats} />
                 </CardBody>
               </Card>
             </Col>
-            
-            <Col md={4}> 
+            <Row><br /></Row>
+            <Col md={5}> 
               <Card className="card-width">
                 <CardBody>
                   <CardTitle><h5><FontAwesomeIcon icon={faHandHoldingUsd} /> Best supply rates</h5></CardTitle>
-                  <CardSubtitle className="mb-2 text-muted">Card Subtitle</CardSubtitle><br />
+                  <CardSubtitle className="mb-2 text-muted">Overview of the best returns on assets</CardSubtitle><br />
                   <Row>
                     {bestSupplyRates.map((token) => {
                       return (
@@ -84,18 +81,19 @@ function Dashboard() {
                 </CardBody>
               </Card>
             </Col>
-            <Col md={8}> 
+            <Col md={7}> 
               <Card className="card-width">
                 <CardBody>
                   <CardTitle><h5><FontAwesomeIcon icon={faCalendarCheck} /> Daily Profits</h5></CardTitle>
-                  <CardSubtitle className="mb-2 text-muted">Card Subtitle</CardSubtitle><br />
+                  <CardSubtitle className="mb-2 text-muted">Graphical representation of your daily returns</CardSubtitle><br />
                   <Row>
-                  
+                    <DailyProfit/>
                   </Row>
                 </CardBody>
               </Card>
             </Col>
           </Row>
+          <br />
           </Container>
         </>
       )}

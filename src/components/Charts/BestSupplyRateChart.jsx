@@ -17,7 +17,7 @@ const options = {
       display: false,
     },
   },
-  borderColor: "#4FDFB1",
+  borderColor: "rgba(83, 0, 255, 1)",
 };
 
 function BestSupplyRateChart(props) {
