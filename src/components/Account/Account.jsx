@@ -2,12 +2,15 @@ import { useState } from "react";
 import Blockie from "../Blockie";
 import { connectors } from "./config";
 import Address from "../Address/Address";
-import { Button, Card, Modal } from "antd";
+import { Card, Modal } from "antd";
+import { Button } from "reactstrap";
 import { useMoralis } from "react-moralis";
-import Text from "antd/lib/typography/Text";
 import { getExplorer } from "helpers/networks";
 import { SelectOutlined } from "@ant-design/icons";
 import { getEllipsisTxt } from "helpers/formatters";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWallet } from "@fortawesome/free-solid-svg-icons";
 
 const styles = {
   account: {
@@ -53,11 +56,9 @@ function Account() {
   if (!isAuthenticated || !account) {
     return (
       <>
-        <div
-          onClick={() => setIsAuthModalVisible(true)}
-        >
-          <p style={styles.text}>Authenticate</p>
-        </div>
+        <Button color="dark" size="sm" onClick={() => setIsAuthModalVisible(true)}> 
+          <FontAwesomeIcon icon={faWallet} /> Connect Wallet
+        </Button>
         <Modal
           visible={isAuthModalVisible}
           footer={null}
@@ -89,7 +90,7 @@ function Account() {
                 }}
               >
                 <img src={icon} alt={title} style={styles.icon} />
-                <Text style={{ fontSize: "14px" }}>{title}</Text>
+                <span style={{ fontSize: "14px" }}>{title}</span>
               </div>
             ))}
           </div>

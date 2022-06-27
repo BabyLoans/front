@@ -103,7 +103,7 @@ function BalanceChart(props) {
     tooltips: { enabled: false },
     elements: {
       center: {
-        text: `$${total}`,
+        text: `${total} BBL`,
         fontStyle: "Verdana",
         sidePadding: 14,
         maxFontSize: 20,
@@ -113,17 +113,7 @@ function BalanceChart(props) {
     },
     plugins: {
       legend: {
-        position: "right",
-        labels: {
-          font: {
-            weight: "bold",
-            size: legendFontSize,
-          },
-          boxWidth: legendFontSize,
-        },
-        onClick: function () {
-          // Do nothing to override the parent function
-        },
+        display: false,
       },
     },
   };

@@ -1,11 +1,13 @@
 import React from "react";
 import Balance from "components/Dashboard/Balance";
-import { Row, Col, Layout, Typography, Card, Spin } from "antd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBalanceScale, faHandHoldingUsd, faCalendarCheck, faNewspaper, faWallet } from "@fortawesome/free-solid-svg-icons";
+import { Container, Card, CardBody, CardSubtitle, CardTitle, Row, Col, Spinner } from "reactstrap";
+import DailyProfit from "components/Charts/DailyProfitChart"; 
 import BestSupplyRate from "components/Dashboard/BestSupplyRate";
 import InvestmentStats from "components/Dashboard/InvestmentStats";
 import { UserBalance, BestSupplyRates, UserInvestmentStats } from "services";
 
-const { Title } = Typography;
 
 function Dashboard() {
   const [balance, setBalance] = React.useState([]);
@@ -33,51 +35,69 @@ function Dashboard() {
   }, [isLoading]);
 
   return (
-    <Layout>
+    <>
       {isLoading ? (
-        <Spin />
+        <>
+          <center>
+            <Spinner animation="border" variant="primary" />
+          </center>
+        </>
       ) : (
-        <Row gutter={[16, 20]}>
-          <Col className="gutter-row" span={12}>
-            <Title level={5}>Balance</Title>
-            <Card
-              className="dashboard-balance-card"
-              bodyStyle={{ padding: "0px 24px 0px 24px" }}
-            >
-              <Balance datas={balance} />
-            </Card>
-          </Col>
-          <Col className="gutter-row" span={12}>
-            <Title level={5}>Investment Stats</Title>
-            <Card className="dashboard-card">
-              <InvestmentStats datas={investmentStats} />
-            </Card>
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <Title level={5}>Best supply rates</Title>
-            <Row gutter={[0, 10]}>
-              {bestSupplyRates.map((token) => {
-                return (
-                  <Col
-                    className="gutter-row"
-                    span={24}
-                    key={"best_rate_" + token.id}
-                  >
-                    <Card className="dashboard-card">
-                      <BestSupplyRate datas={token} />
-                    </Card>
-                  </Col>
-                );
-              })}
-            </Row>
-          </Col>
-          <Col className="gutter-row" span={18}>
-            <Title level={5}>Daily profits</Title>
-            <Card className="dashboard-card"></Card>
-          </Col>
-        </Row>
+        <>
+        <Container>
+          <br />
+          <Row>
+            <Col md={6}> 
+              <Card className="card-width">
+                <CardBody>
+                  <CardTitle><h5> <FontAwesomeIcon icon={faBalanceScale} /> Balance</h5></CardTitle>
+                  <CardSubtitle className="mb-2 text-muted">Overview of your wallet</CardSubtitle><br />
+                  <Balance datas={balance} />
+                </CardBody>
+              </Card>
+            </Col>
+            <Col md={6}> 
+              <Card className="card-width">
+                <CardBody>
+                  <CardTitle><h5> <FontAwesomeIcon icon={faWallet} /> Investment Stats</h5></CardTitle>
+                  <CardSubtitle className="mb-2 text-muted">Statistics of your return on investment</CardSubtitle><br />
+                  <InvestmentStats datas={investmentStats} />
+                </CardBody>
+              </Card>
+            </Col>
+            <Row><br /></Row>
+            <Col md={5}> 
+              <Card className="card-width">
+                <CardBody>
+                  <CardTitle><h5><FontAwesomeIcon icon={faHandHoldingUsd} /> Best supply rates</h5></CardTitle>
+                  <CardSubtitle className="mb-2 text-muted">Overview of the best returns on assets</CardSubtitle><br />
+                  <Row>
+                    {bestSupplyRates.map((token) => {
+                      return (
+                        <BestSupplyRate datas={token} />
+                      );
+                    })}
+                  </Row>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col md={7}> 
+              <Card className="card-width">
+                <CardBody>
+                  <CardTitle><h5><FontAwesomeIcon icon={faCalendarCheck} /> Daily Profits</h5></CardTitle>
+                  <CardSubtitle className="mb-2 text-muted">Graphical representation of your daily returns</CardSubtitle><br />
+                  <Row>
+                    <DailyProfit/>
+                  </Row>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+          <br />
+          </Container>
+        </>
       )}
-    </Layout>
+    </>
   );
 }
 

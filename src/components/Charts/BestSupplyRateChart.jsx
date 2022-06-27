@@ -17,13 +17,13 @@ const options = {
       display: false,
     },
   },
-  borderColor: "#4FDFB1",
+  borderColor: "rgba(83, 0, 255, 1)",
 };
 
 function BestSupplyRateChart(props) {
   const { data } = props;
 
-  return <Line data={data} options={options} height={70} />;
+  return <Line data={data} options={options} height={25} />;
 }
 
 export default BestSupplyRateChart;
