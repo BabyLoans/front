@@ -33,7 +33,9 @@ function LoansBaseTable(props) {
             </tr>
           </thead>
           <tbody>
-            {bestSupplyRates.map((token) => generateTableRow(token))}
+            {bestSupplyRates.map((token, index) =>
+              generateTableRow(token, index)
+            )}
           </tbody>
         </Table>
       </CardBody>
@@ -42,7 +44,7 @@ function LoansBaseTable(props) {
 }
 
 LoansBaseTable.propTypes = {
-  cardIcon: propTypes.element.isRequired,
+  cardIcon: propTypes.object.isRequired,
   cardTitle: propTypes.string.isRequired,
   cardSubtitle: propTypes.string.isRequired,
   generateTableRow: propTypes.func.isRequired,
