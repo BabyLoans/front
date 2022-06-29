@@ -23,7 +23,7 @@ function BorrowTable(props) {
               key={`BorrowRow_${index}`}
               datas={token}
               actionButtonText="Borrow"
-              onActionButtonClick={() => {
+              onAction={() => {
                 setModalToken(token);
                 setModalIsOpen(true);
               }}
