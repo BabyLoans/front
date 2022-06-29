@@ -1,34 +1,31 @@
 import React from "react";
+import { useMoralis } from "react-moralis";
 import Balance from "components/Dashboard/Balance";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBalanceScale, faHandHoldingUsd, faCalendarCheck, faNewspaper, faWallet } from "@fortawesome/free-solid-svg-icons";
+import { faBalanceScale, faHandHoldingUsd, faCalendarCheck, faWallet } from "@fortawesome/free-solid-svg-icons";
 import { Container, Card, CardBody, CardSubtitle, CardTitle, Row, Col, Spinner } from "reactstrap";
 import DailyProfit from "components/Charts/DailyProfitChart"; 
 import BestSupplyRate from "components/Dashboard/BestSupplyRate";
 import InvestmentStats from "components/Dashboard/InvestmentStats";
-import { UserBalance, BestSupplyRates, UserInvestmentStats } from "services";
+import { BestSupplyRates, UserInvestmentStats } from "services";
 
 
 function Dashboard() {
-  const [balance, setBalance] = React.useState([]);
+  const { isAuthenticated } = useMoralis();
   const [investmentStats, setInvestmentStats] = React.useState([]);
   const [bestSupplyRates, setBestSupplyRates] = React.useState([]);
-
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     if (isLoading) {
       let promises = [
-        UserBalance.get(),
         BestSupplyRates.get(),
         UserInvestmentStats.get(),
       ];
 
       Promise.all(promises).then((values) => {
-        setBalance(values[0]);
-        setBestSupplyRates(values[1]);
-        setInvestmentStats(values[2]);
-
+        setBestSupplyRates(values[0]);
+        setInvestmentStats(values[1]);
         setIsLoading(false);
       });
     }
@@ -52,7 +49,7 @@ function Dashboard() {
                 <CardBody>
                   <CardTitle><h5> <FontAwesomeIcon icon={faBalanceScale} /> Balance</h5></CardTitle>
                   <CardSubtitle className="mb-2 text-muted">Overview of your wallet</CardSubtitle><br />
-                  <Balance datas={balance} />
+                  <Balance isAuthenticated={isAuthenticated}/>
                 </CardBody>
               </Card>
             </Col>

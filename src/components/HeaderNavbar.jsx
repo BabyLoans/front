@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Collapse,
-  Navbar,
-  Button,
-  NavbarBrand,
-  Nav,
-  NavLink,
-} from "reactstrap";
+import { Collapse, Navbar, Button, NavbarBrand, Nav} from "reactstrap";
 import { Link } from "react-router-dom";
 import Account from "components/Account/Account";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

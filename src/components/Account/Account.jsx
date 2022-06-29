@@ -49,7 +49,7 @@ const styles = {
 };
 
 function Account() {
-  const { authenticate, isAuthenticated, account, chainId, logout } = useMoralis();
+  const { authenticate, chainId, logout, account, isAuthenticated } = useMoralis();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAuthModalVisible, setIsAuthModalVisible] = useState(false);
   
@@ -101,10 +101,11 @@ function Account() {
 
   return (
     <>
-      <div style={styles.account} onClick={() => setIsModalVisible(true)}>
-        <p style={{ marginRight: "5px", ...styles.text }}>{getEllipsisTxt(account, 6)}</p>
-        <Blockie currentWallet scale={3} />
-      </div>
+      <Button color="dark" size="sm" onClick={() => setIsModalVisible(true)}>
+        <p style={{ marginRight: "5px", display: "inline", ...styles.text }}>{getEllipsisTxt(account, 6)} 
+          { ' ' } <Blockie currentWallet scale={2} />
+        </p>
+      </Button>
       <Modal
         visible={isModalVisible}
         footer={null}
