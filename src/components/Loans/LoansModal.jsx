@@ -10,12 +10,14 @@ import {
   ModalHeader,
   ModalFooter,
   InputGroupText,
+  Spinner,
 } from "reactstrap";
 
 function LoansModal(props) {
   const {
     token,
     onCancel,
+    isLoading,
     bodyTitle,
     onValidate,
     modalIsOpen,
@@ -107,12 +109,13 @@ function LoansModal(props) {
       <ModalFooter>
         <Button
           color="dark"
+          className="me-1"
           onClick={() => {
             setIsValidating(true);
           }}
         >
-          {validateButtonText}
-        </Button>{" "}
+          {isLoading ? <Spinner /> : validateButtonText}
+        </Button>
         <Button
           color="secondary"
           onClick={() => {

@@ -6,7 +6,7 @@ import LoansTableRow from "components/Loans/LoansTableRow";
 import { faHandHoldingUsd } from "@fortawesome/free-solid-svg-icons";
 
 function BorrowTable(props) {
-  const { bestSupplyRates } = props;
+  const { tokens } = props;
 
   const [modalToken, setModalToken] = React.useState();
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
@@ -30,7 +30,7 @@ function BorrowTable(props) {
             />
           );
         }}
-        bestSupplyRates={bestSupplyRates}
+        tokens={tokens}
       />
       <LoansModal
         bodyTitle="BORROW"
@@ -50,7 +50,7 @@ function BorrowTable(props) {
 }
 
 BorrowTable.propTypes = {
-  bestSupplyRates: propTypes.array.isRequired,
+  tokens: propTypes.array,
 };
 
 export default BorrowTable;

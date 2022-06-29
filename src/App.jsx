@@ -9,14 +9,14 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from "react-router-dom";
-
 import HeaderNavbar from "components/HeaderNavbar";
 
 const App = () => {
-  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } = useMoralis();
-  
+  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
+    useMoralis();
+
   React.useEffect(() => {
     const connectorId = window.localStorage.getItem("connectorId");
     if (isAuthenticated && !isWeb3Enabled && !isWeb3EnableLoading)
@@ -26,7 +26,7 @@ const App = () => {
 
   return (
     <Router>
-      <HeaderNavbar/>
+      <HeaderNavbar />
       <Switch>
         <Route path="/dashboard">
           <Dashboard />
