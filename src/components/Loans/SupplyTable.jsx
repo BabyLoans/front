@@ -27,7 +27,7 @@ function SupplyTable(props) {
               key={`SupplyRow_${index}`}
               datas={token}
               actionButtonText="Supply"
-              onActionButtonClick={() => {
+              onAction={() => {
                 setModalToken(token);
                 setModalIsOpen(true);
               }}
@@ -41,10 +41,10 @@ function SupplyTable(props) {
         token={modalToken}
         modalIsOpen={modalIsOpen}
         validateButtonText={modalValidateButtonText}
-        onCancelClick={() => {
+        onCancel={() => {
           setModalIsOpen(false);
         }}
-        onValidateClick={() => {
+        onValidate={() => {
           // Call smart contract
           setModalIsOpen(false);
         }}

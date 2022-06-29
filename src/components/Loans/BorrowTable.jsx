@@ -37,10 +37,10 @@ function BorrowTable(props) {
         token={modalToken}
         modalIsOpen={modalIsOpen}
         validateButtonText="Borrowing"
-        onCancelClick={() => {
+        onCancel={() => {
           setModalIsOpen(false);
         }}
-        onValidateClick={() => {
+        onValidate={() => {
           // Call smart contract
           setModalIsOpen(false);
         }}
