@@ -1,3 +1,4 @@
+import { useMoralis, useERC20Balances } from "react-moralis";
 import React from "react";
 import propTypes from "prop-types";
 import "chart.js/auto";
@@ -91,6 +92,7 @@ const plugins = [
 ];
 
 function BalanceChart(props) {
+
   const { data, style, total } = props;
   const legendFontSize = props.legendFontSize || 14;
 
@@ -102,14 +104,6 @@ function BalanceChart(props) {
     hover: { mode: null },
     tooltips: { enabled: false },
     elements: {
-      center: {
-        text: `$${total}`,
-        fontStyle: "Verdana",
-        sidePadding: 14,
-        maxFontSize: 20,
-        minFontSize: 20,
-        lineHeight: 20,
-      },
     },
     plugins: {
       legend: {
@@ -136,8 +130,7 @@ function BalanceChart(props) {
 BalanceChart.propTypes = {
   legendFontSize: propTypes.number,
   data: propTypes.object.isRequired,
-  style: propTypes.object.isRequired,
-  total: propTypes.number.isRequired,
+  style: propTypes.object.isRequired
 };
 
 export default BalanceChart;

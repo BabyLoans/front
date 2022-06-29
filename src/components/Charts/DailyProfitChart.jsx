@@ -55,8 +55,6 @@ function DailyProfitChart() {
   return <Line options={options} data={data} height={"100%"} options={{ maintainAspectRatio: false }}/>;
 }
 
-DailyProfitChart.propTypes = {
-data: propTypes.object.isRequired,
-};
+
 
 export default DailyProfitChart;

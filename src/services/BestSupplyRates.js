@@ -9,8 +9,6 @@ export async function get() {
     tokens[index].rates = rateHistory;
   }
 
-  console.log(tokens);
-
   return tokens;
 }
 

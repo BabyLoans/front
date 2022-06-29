@@ -1,7 +1,9 @@
 import React from "react";
 import Balance from "components/Dashboard/Balance";
+import ERC20Balance from "components/ERC20Balance";
+import AssetSelector from "components/Wallet/components/AssetSelector"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBalanceScale, faHandHoldingUsd, faCalendarCheck, faNewspaper, faWallet } from "@fortawesome/free-solid-svg-icons";
+import { faBalanceScale, faHandHoldingUsd, faCalendarCheck, faWallet } from "@fortawesome/free-solid-svg-icons";
 import { Container, Card, CardBody, CardSubtitle, CardTitle, Row, Col, Spinner } from "reactstrap";
 import DailyProfit from "components/Charts/DailyProfitChart"; 
 import BestSupplyRate from "components/Dashboard/BestSupplyRate";
