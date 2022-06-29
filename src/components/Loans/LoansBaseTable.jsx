@@ -4,13 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, CardBody, CardSubtitle, CardTitle, Table } from "reactstrap";
 
 function LoansBaseTable(props) {
-  const {
-    cardIcon,
-    cardTitle,
-    cardSubtitle,
-    generateTableRow,
-    bestSupplyRates,
-  } = props;
+  const { tokens, cardIcon, cardTitle, cardSubtitle, generateTableRow } = props;
 
   return (
     <Card className="card-width">
@@ -33,9 +27,7 @@ function LoansBaseTable(props) {
             </tr>
           </thead>
           <tbody>
-            {bestSupplyRates.map((token, index) =>
-              generateTableRow(token, index)
-            )}
+            {tokens?.map((token, index) => generateTableRow(token, index))}
           </tbody>
         </Table>
       </CardBody>
@@ -44,11 +36,11 @@ function LoansBaseTable(props) {
 }
 
 LoansBaseTable.propTypes = {
+  tokens: propTypes.array,
   cardIcon: propTypes.object.isRequired,
   cardTitle: propTypes.string.isRequired,
   cardSubtitle: propTypes.string.isRequired,
   generateTableRow: propTypes.func.isRequired,
-  bestSupplyRates: propTypes.array.isRequired,
 };
 
 export default LoansBaseTable;

@@ -1,22 +1,12 @@
 import React from "react";
 import propTypes from "prop-types";
-import {
-  Input,
-  Modal,
-  Table,
-  Button,
-  ModalBody,
-  InputGroup,
-  ModalHeader,
-  ModalFooter,
-  InputGroupText,
-  Row, Col, UncontrolledCollapse, Card, CardBody
-} from "reactstrap";
+import { Input, Modal, Table, Button, ModalBody, InputGroup, ModalHeader, ModalFooter, InputGroupText, Row, Col, UncontrolledCollapse, Card, CardBody, Spinner,} from "reactstrap";
 
 function LoansModal(props) {
   const {
     token,
     onCancel,
+    isLoading,
     bodyTitle,
     bodyTitleAction,
     onValidate,
@@ -189,12 +179,13 @@ function LoansModal(props) {
       <ModalFooter>
         <Button
           color="dark"
+          className="me-1"
           onClick={() => {
             setIsValidating(true);
           }}
         >
-          { isVisibleDetailAction ? validateButtonText :  bodyTitleAction }
-        </Button>{" "}
+          {isLoading ? <Spinner /> : isVisibleDetailAction ? validateButtonText : bodyTitleAction}
+        </Button>
         <Button
           color="secondary"
           onClick={() => {

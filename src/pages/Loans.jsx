@@ -1,6 +1,6 @@
 import React from "react";
+import { UserSupply, UserBorrow, UserBalance } from "services";
 import BalanceSupplyBorrowChart from "components/Loans/BalanceSupplyBorrow";
-import { UserSupply, UserBorrow, UserBalance, BestSupplyRates } from "services";
 import {
   Container,
   Card,
@@ -10,29 +10,41 @@ import {
   Spinner,
   Progress,
 } from "reactstrap";
+import { TokenLending } from "services";
 import SupplyTable from "components/Loans/SupplyTable";
 import BorrowTable from "components/Loans/BorrowTable";
+import { useMoralis } from "react-moralis";
 
 function Loans() {
+  const { web3, isWeb3Enabled } = useMoralis();
+
   const [balance, setBalance] = React.useState([]);
   //const [supply, setSupply] = React.useState([]);
   //const [borrow, setBorrow] = React.useState([]);
-  const [bestSupplyRates, setBestSupplyRates] = React.useState([]);
 
+  const [tokens, setTokens] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  React.useEffect(async () => {
+    if (isLoading || isWeb3Enabled) {
+      let tokens = await TokenLending.fetchTokens(web3);
+      console.log(tokens);
+      setTokens(tokens);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, isWeb3Enabled]);
 
   React.useEffect(() => {
     if (isLoading) {
       let promises = [
         UserBalance.get(),
-        BestSupplyRates.get(),
         // UserSupply.get(),
         // UserBorrow.get()
       ];
 
       Promise.all(promises).then((values) => {
         setBalance(values[0]);
-        setBestSupplyRates(values[1]);
         // setSupply(values[1]);
         // setBorrow(values[2]);
         setIsLoading(false);
@@ -80,11 +92,11 @@ function Loans() {
             </Row>
             <Row>
               <Col md={6}>
-                <SupplyTable bestSupplyRates={bestSupplyRates} />
+                <SupplyTable tokens={tokens} />
               </Col>
 
               <Col md={6}>
-                <BorrowTable bestSupplyRates={bestSupplyRates} />
+                <BorrowTable tokens={tokens} />
               </Col>
             </Row>
           </Container>
