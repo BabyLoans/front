@@ -62,6 +62,7 @@ function SupplyTable(props) {
       />
       <LoansModal
         bodyTitle="SUPPLY"
+        bodyTitleAction="WITHDRAW"
         token={modalToken}
         modalIsOpen={modalIsOpen}
         validateButtonText={modalValidateButtonText}
