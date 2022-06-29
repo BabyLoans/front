@@ -1,7 +1,9 @@
 import React from "react";
 import propTypes from "prop-types";
 import BalanceChart from "components/Charts/BalanceChart";
-import { useMoralis, useERC20Balances } from "react-moralis";
+import { useERC20Balances } from "react-moralis";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWallet } from "@fortawesome/free-solid-svg-icons";
 
 const margin = { left: 0, right: 100 };
 
@@ -36,30 +38,44 @@ function buildDatasetsFromDatas(datas) {
 }
 
 function Balance(props) {
-
+  const { isAuthenticated } = props;
   const [isVisibleChart, setIsVisibleChart] = React.useState(false);
-  const { data, isLoading } = useERC20Balances(props);
+  const { data, isLoading } = useERC20Balances();
   const [datasets, setDatasets] = React.useState();
 
   React.useEffect(() => {
     if (!isLoading) {
       let datasetsTmp = buildDatasetsFromDatas(data);
       setDatasets(datasetsTmp);
-      setIsVisibleChart(true);
+      if(datasetsTmp.datasets[0].data.length > 0) {
+        setIsVisibleChart(true);
+      } else {
+        setIsVisibleChart(false);
+      }
     }
   }, [isLoading]) 
 
   return (
-    <div style={styles.root}>
-      {isVisibleChart && (
-        <BalanceChart
-          data={datasets}
-          legendFontSize={14}
-          style={{ marginLeft: margin.left, marginRight: margin.right }}
-          {...props}
-        />
+    <>
+      {!isVisibleChart || !isAuthenticated? (
+        <>
+          <center>
+            <FontAwesomeIcon icon={faWallet} /> Wallet not connected or empty
+          </center>
+        </>
+      ) : (
+        <div style={styles.root}>
+          {isVisibleChart && (
+            <BalanceChart
+              data={datasets}
+              legendFontSize={14}
+              style={{ marginLeft: margin.left, marginRight: margin.right }}
+              {...props}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }
 
