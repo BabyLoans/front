@@ -1,7 +1,14 @@
-import React from 'react';
-import { Collapse, Navbar, Button, NavbarBrand, Nav, NavLink } from 'reactstrap';
+import React from "react";
+import {
+  Collapse,
+  Navbar,
+  Button,
+  NavbarBrand,
+  Nav,
+  NavLink,
+} from "reactstrap";
 import { Link } from "react-router-dom";
-import Account from 'components/Account/Account';
+import Account from "components/Account/Account";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faChartPie, faCogs } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,43 +19,48 @@ function HeaderNavbar() {
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">
           <img
+            alt="babyloans_logo"
             className="img-fluid rounded-circle"
             src={require("assets/img/bbl_logo.png").default}
             style={{ width: "35px", display: "inline" }}
-          /> { ' '}
+          />{" "}
           {actualPage}
         </NavbarBrand>
         <Collapse style={{ flexGrow: "0" }} navbar>
           <Nav navbar>
-            <NavLink>
-              <Link style={{  }} to="/dashboard" onClick={() => setActualPage("Dashboard")}>
-              <Button color="dark" size="sm"> 
-                <FontAwesomeIcon icon={faHome}/>
-              </Button>
-              </Link>
-            </NavLink>
-            <NavLink>
-            <Link style={{  }} to="/loans" onClick={() => setActualPage("Supply / Borrow")}>
-            <Button color="dark" size="sm"> 
-                <FontAwesomeIcon icon={faChartPie}/>
+            <Link
+              style={{}}
+              to="/dashboard"
+              onClick={() => setActualPage("Dashboard")}
+            >
+              <Button color="dark" size="sm">
+                <FontAwesomeIcon icon={faHome} />
               </Button>
             </Link>
-            </NavLink>
-            <NavLink>
-            <Link style={{  }} to="/settings" onClick={() => setActualPage("Settings")}>
-              <Button color="dark" size="sm"> 
-                <FontAwesomeIcon icon={faCogs}/>
+            <Link
+              style={{}}
+              to="/loans"
+              onClick={() => setActualPage("Supply / Borrow")}
+            >
+              <Button color="dark" size="sm">
+                <FontAwesomeIcon icon={faChartPie} />
               </Button>
             </Link>
-            </NavLink>
-            <NavLink>
-              <Account />
-            </NavLink>
+            <Link
+              style={{}}
+              to="/settings"
+              onClick={() => setActualPage("Settings")}
+            >
+              <Button color="dark" size="sm">
+                <FontAwesomeIcon icon={faCogs} />
+              </Button>
+            </Link>
+            <Account />
           </Nav>
         </Collapse>
       </Navbar>
     </div>
-  )
+  );
 }
 
 export default HeaderNavbar;

@@ -1,30 +1,53 @@
 import React from "react";
 import propTypes from "prop-types";
 import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Table,
-  InputGroup,
-  InputGroupText,
   Input,
+  Modal,
+  Table,
+  Button,
+  ModalBody,
+  InputGroup,
+  ModalHeader,
+  ModalFooter,
+  InputGroupText,
 } from "reactstrap";
 
 function LoansModal(props) {
   const {
     token,
+    onCancel,
     bodyTitle,
+    onValidate,
     modalIsOpen,
-    onCancelClick,
-    onValidateClick,
     validateButtonText,
   } = props;
 
+  const [isCanceling, setIsCanceling] = React.useState(false);
+  const [isValidating, setIsValidating] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isCanceling) {
+      onCancel();
+      setIsCanceling(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCanceling]);
+
+  React.useEffect(() => {
+    if (isValidating) {
+      onValidate();
+      setIsValidating(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isValidating]);
+
   return (
     <Modal isOpen={modalIsOpen} modalTransition={{ timeout: 250 }}>
-      <ModalHeader toggle={onCancelClick()}>
+      <ModalHeader
+        toggle={() => {
+          setIsCanceling(true);
+        }}
+      >
         <div style={{ display: "inline-flex" }}>
           <img
             alt="logo coin"
@@ -82,10 +105,20 @@ function LoansModal(props) {
         </Table>
       </ModalBody>
       <ModalFooter>
-        <Button color="dark" onClick={onValidateClick()}>
+        <Button
+          color="dark"
+          onClick={() => {
+            setIsValidating(true);
+          }}
+        >
           {validateButtonText}
         </Button>{" "}
-        <Button color="secondary" onClick={onCancelClick()}>
+        <Button
+          color="secondary"
+          onClick={() => {
+            setIsCanceling(true);
+          }}
+        >
           Cancel
         </Button>
       </ModalFooter>
@@ -95,11 +128,20 @@ function LoansModal(props) {
 
 LoansModal.propTypes = {
   token: propTypes.object,
-  onCancelClick: propTypes.func,
-  onValidateClick: propTypes.func,
+  onCancel: propTypes.func,
+  onValidate: propTypes.func,
   bodyTitle: propTypes.string.isRequired,
   modalIsOpen: propTypes.bool.isRequired,
   validateButtonText: propTypes.string.isRequired,
+};
+
+LoansModal.defaultProps = {
+  onCancel: () => {
+    // Do nothing
+  },
+  onValidate: () => {
+    // Do nothing
+  },
 };
 
 export default LoansModal;

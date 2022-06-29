@@ -4,8 +4,19 @@ import { Button } from "reactstrap";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function SupplyModal(props) {
-  const { datas, actionButtonText, onActionButtonClick } = props;
+function LoansTableRow(props) {
+  const { datas, actionButtonText, onAction } = props;
+
+  const [isActionSelected, setIsActionSelected] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isActionSelected) {
+      onAction();
+      setIsActionSelected(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isActionSelected]);
+
   return (
     <>
       <tr>
@@ -20,7 +31,13 @@ function SupplyModal(props) {
         <td>{datas.symbol}</td>
         <td>{datas.rates[0].value} %</td>
         <td>
-          <Button color="dark" size="sm" onClick={onActionButtonClick}>
+          <Button
+            color="dark"
+            size="sm"
+            onClick={() => {
+              setIsActionSelected(true);
+            }}
+          >
             {actionButtonText} <FontAwesomeIcon icon={faPlusCircle} />
           </Button>
         </td>
@@ -29,16 +46,16 @@ function SupplyModal(props) {
   );
 }
 
-SupplyModal.propTypes = {
+LoansTableRow.propTypes = {
+  onAction: propTypes.func,
   datas: propTypes.object.isRequired,
-  onActionButtonClick: propTypes.func,
   actionButtonText: propTypes.string.isRequired,
 };
 
-SupplyModal.defaultProps = {
-  onActionButtonClick: () => {
+LoansTableRow.defaultProps = {
+  onAction: () => {
     // Do nothing
   },
 };
 
-export default SupplyModal;
+export default LoansTableRow;
