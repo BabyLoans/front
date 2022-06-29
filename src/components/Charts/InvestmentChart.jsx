@@ -3,6 +3,7 @@ import propTypes from "prop-types";
 import { Bar } from "react-chartjs-2";
 
 const options = {
+  color: "white",
   responsive: true,
   barPercentage: 0.5,
   maintainAspectRatio: false,

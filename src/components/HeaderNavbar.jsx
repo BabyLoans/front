@@ -9,7 +9,7 @@ function HeaderNavbar() {
   const [actualPage, setActualPage] = React.useState("Dashboard");
   return (
     <div>
-      <Navbar color="light" light expand="md">
+      <Navbar expand="md">
         <NavbarBrand href="/">
           <img
             alt="babyloans_logo"
@@ -26,7 +26,7 @@ function HeaderNavbar() {
               to="/dashboard"
               onClick={() => setActualPage("Dashboard")}
             >
-              <Button color="dark" size="sm">
+              <Button size="sm" style={{ backgroundColor: "rgb(30, 32, 49)" }}>
                 <FontAwesomeIcon icon={faHome} />
               </Button>
             </Link>
@@ -35,7 +35,7 @@ function HeaderNavbar() {
               to="/loans"
               onClick={() => setActualPage("Supply / Borrow")}
             >
-              <Button color="dark" size="sm">
+              <Button size="sm" style={{ backgroundColor: "rgb(30, 32, 49)" }}>
                 <FontAwesomeIcon icon={faChartPie} />
               </Button>
             </Link>
@@ -44,7 +44,7 @@ function HeaderNavbar() {
               to="/settings"
               onClick={() => setActualPage("Settings")}
             >
-              <Button color="dark" size="sm">
+              <Button size="sm" style={{ backgroundColor: "rgb(30, 32, 49)" }}>
                 <FontAwesomeIcon icon={faCogs} />
               </Button>
             </Link>

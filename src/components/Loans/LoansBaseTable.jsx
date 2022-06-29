@@ -7,7 +7,7 @@ function LoansBaseTable(props) {
   const { tokens, cardIcon, cardTitle, cardSubtitle, generateTableRow } = props;
 
   return (
-    <Card className="card-width">
+    <Card className="card-width" style={{ borderRadius: "24px", backgroundColor: "rgb(30 32 49)"}}>
       <CardBody>
         <CardTitle>
           <h5>
@@ -15,7 +15,7 @@ function LoansBaseTable(props) {
             <FontAwesomeIcon icon={cardIcon} /> {cardTitle}
           </h5>
         </CardTitle>
-        <CardSubtitle className="mb-2 text-muted">{cardSubtitle}</CardSubtitle>
+        <CardSubtitle className="mb-2">{cardSubtitle}</CardSubtitle>
         <br />
         <Table style={{ width: "100%" }}>
           <thead>

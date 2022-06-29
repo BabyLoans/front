@@ -66,20 +66,20 @@ function Loans() {
             <br />
             <Row>
               <Col md={12}>
-                <Card className="card-width">
+                <Card className="card-width" style={{ borderRadius: "24px", backgroundColor: "rgb(30 32 49)"}}>
                   <CardBody>
                     <Row>
                       <Col xs={2}>
-                        <h6>Your deposit</h6>
-                        <p className="mb-2 text-muted">$ 5000.00</p>
+                        <h5>Your deposit</h5>
+                        <p className="mb-2">$ 5000.00</p>
                         <Progress color="success" value={2500} max={5000} />
                       </Col>
                       <Col xs={8}>
                         <BalanceSupplyBorrowChart datas={balance} />
                       </Col>
                       <Col xs={2}>
-                        <h6>Your borrow</h6>
-                        <p className="mb-2 text-muted">$ 5000.00</p>
+                        <h5>Your borrow</h5>
+                        <p className="mb-2">$ 5000.00</p>
                         <Progress color="success" value={1300} max={5000} />
                       </Col>
                     </Row>
