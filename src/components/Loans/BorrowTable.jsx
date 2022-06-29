@@ -34,6 +34,7 @@ function BorrowTable(props) {
       />
       <LoansModal
         bodyTitle="BORROW"
+        bodyTitleAction="REPAY"
         token={modalToken}
         modalIsOpen={modalIsOpen}
         validateButtonText="Borrowing"
