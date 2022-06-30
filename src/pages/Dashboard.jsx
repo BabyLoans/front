@@ -1,7 +1,7 @@
 import React from "react";
 import { useMoralis } from "react-moralis";
 import Balance from "components/Dashboard/Balance";
-import DailyProfit from "components/Charts/DailyProfitChart";
+import DailyProfit from "components/Dashboard/DailyProfit";
 import { BestSupplyRates, UserInvestmentStats } from "services";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InvestmentStats from "components/Dashboard/InvestmentStats";
