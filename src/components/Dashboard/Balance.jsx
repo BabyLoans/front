@@ -54,7 +54,7 @@ function Balance(props) {
 
   return (
     <>
-      {!isVisibleChart || !isAuthenticated? (
+      { !isAuthenticated? (
         <>
           <Alert color="danger">
             <FontAwesomeIcon icon={faWallet} /> Wallet not connected
