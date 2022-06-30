@@ -19,7 +19,7 @@ import LoansTable from "components/Loans/LoansTable";
 function Loans() {
   const { isAuthenticated, web3, isWeb3Enabled, account } = useMoralis();
 
-  const [balance, setBalance] = React.useState([]);
+  const [balanceByBTokens, setBalanceByBTokens] = React.useState([]);
 
   const [bTokens, setBTokens] = React.useState();
   const [accountInfo, setAccountInfo] = React.useState({
@@ -31,7 +31,8 @@ function Loans() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(async () => {
     loadBTokens();
-    loadDeposit();
+    loadAccountInfo();
+    loadBTokensAccountInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, isWeb3Enabled]);
 
@@ -40,7 +41,6 @@ function Loans() {
       let promises = [UserBalance.get()];
 
       Promise.all(promises).then((values) => {
-        setBalance(values[0]);
         setIsLoading(false);
       });
     }
@@ -55,14 +55,13 @@ function Loans() {
       for (let contract of contracts) {
         tokens.push(await BToken.fetchBTokenInfos(web3, contract, account));
       }
-
       console.log(tokens);
 
       setBTokens(tokens);
     }
   };
 
-  const loadDeposit = async () => {
+  const loadAccountInfo = async () => {
     if (isLoading || isWeb3Enabled) {
       let accountUser = await Comptroller.getAccountInfo(web3, account);
       setAccountInfo({
@@ -71,6 +70,15 @@ function Loans() {
       });
     }
   };
+
+  const loadBTokensAccountInfo = async () => {
+    if (isLoading || isWeb3Enabled) {
+      let bTokensAccountInfo = await Comptroller.getBTokensAccountInfo(web3, account);
+      setBalanceByBTokens(bTokensAccountInfo);
+    }
+  };
+
+  
 
   return (
     <>
@@ -95,7 +103,7 @@ function Loans() {
                             <Progress color="success" value={accountInfo.supply} max={5000} />
                           </Col>
                           <Col xs={8}>
-                            <BalanceSupplyBorrowChart datas={balance} />
+                            <BalanceSupplyBorrowChart datas={balanceByBTokens} />
                           </Col>
                           <Col xs={2}>
                             <h5>Your borrow</h5>

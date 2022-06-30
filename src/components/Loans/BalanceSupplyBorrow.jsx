@@ -23,12 +23,11 @@ function buildDatasetsFromDatas(datas) {
     ],
   };
 
-  for (let data of datas) {
-    datasets.labels.push(data.symbol);
-    datasets.datasets[0].data.push(data.amount);
-    datasets.datasets[0].backgroundColor.push(data.color);
+  for (let property in datas) {
+    datasets.labels.push(property);
+    datasets.datasets[0].data.push(datas[property]);
+    datasets.datasets[0].backgroundColor.push("#" + Math.random().toString(16).substr(-6));
   }
-
   return datasets;
 }
 

@@ -33,8 +33,8 @@ async function getAccountInfo(web3, address) {
   let totalBorrow = 0;
   for (let bToken of bTokens) {
     let account = await bToken.methods.getAccountInfo(address).call();
-    totalSupply += parseFloat(account[1]);
-    totalBorrow += parseFloat(account[2]);
+    totalSupply +=  web3.utils.fromWei(parseFloat(account[1]), "ether");
+    totalBorrow += web3.utils.fromWei(parseFloat(account[2]), "ether");
   }
 
   return {
@@ -43,4 +43,16 @@ async function getAccountInfo(web3, address) {
   };
 }
 
-export { createComptrollerInstance, fetchBTokenContracts, getAccountInfo };
+
+async function getBTokensAccountInfo(web3, address) {
+  let bTokens = await fetchBTokenContracts(web3);
+  let tab = {};
+  for (let bToken of bTokens) {
+    let account = await bToken.methods.getAccountInfo(address).call();
+    let symbol = await bToken.methods.symbol().call();
+    tab[symbol] = web3.utils.fromWei(parseFloat(account[1]), "ether");
+  }
+  return tab;
+}
+
+export { createComptrollerInstance, fetchBTokenContracts, getAccountInfo, getBTokensAccountInfo };
