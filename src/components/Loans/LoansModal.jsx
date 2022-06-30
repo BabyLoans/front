@@ -51,7 +51,7 @@ function LoansModal(props) {
   React.useEffect(() => {
     if (isValidating) {
       if (isEnabledToken) {
-        if (selectedAction) {
+        if (selectedAction === 0) {
           onFirstActionValidate(inputValue);
         } else {
           onSecondActionValidate(inputValue);
@@ -126,8 +126,8 @@ function LoansModal(props) {
                   <Input
                     type="number"
                     style={{ width: "25%" }}
-                    onChange={(value) => {
-                      setInputValue(value);
+                    onChange={(event) => {
+                      setInputValue(event.target.value);
                     }}
                   />
                   <InputGroupText>$</InputGroupText>

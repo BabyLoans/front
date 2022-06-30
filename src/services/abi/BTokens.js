@@ -67,8 +67,7 @@ async function approveUnderlyingContract(web3, bTokenContract, account) {
 }
 
 async function mint(web3, bTokenContract, amount, account) {
-  let wei = web3.utils.toWei(amount, "ether");
-  console.log(wei);
+  let wei = web3.utils.toWei(amount.toString(), "ether");
   return new Promise((resolve, reject) => {
     bTokenContract.methods
       .mint(wei)
@@ -83,7 +82,7 @@ async function mint(web3, bTokenContract, amount, account) {
 }
 
 async function redeem(web3, bTokenContract, amount, account) {
-  let wei = web3.utils.toWei(amount, "ether");
+  let wei = web3.utils.toWei(amount.toString(), "ether");
   return new Promise((resolve, reject) => {
     bTokenContract.methods
       .redeem(wei)
