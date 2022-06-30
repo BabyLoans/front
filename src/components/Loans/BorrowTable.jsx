@@ -45,7 +45,7 @@ function BorrowTable(props) {
         firstActionTitle="BORROW"
         secondActionTitle="REPAY"
         isLoading={modalIsLoading}
-        validateButtonText="Borrowing"
+        validateButtonText="Confirm"
         onCancel={() => {
           setModalIsOpen(false);
           setModalIsLoading(false);
@@ -57,6 +57,12 @@ function BorrowTable(props) {
         }}
         onSecondActionValidate={() => {
           // Call smart contract
+          setModalIsOpen(false);
+          setModalIsLoading(false);
+        }}
+        onEnableActionValidate={async () => {
+          // Call smart contract
+
           setModalIsOpen(false);
           setModalIsLoading(false);
         }}

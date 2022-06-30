@@ -24,9 +24,9 @@ function LoansModal(props) {
     modalIsOpen,
     firstActionTitle,
     secondActionTitle,
-    validateButtonText,
     onFirstActionValidate,
     onSecondActionValidate,
+    onEnableActionValidate,
   } = props;
 
   const [isCanceling, setIsCanceling] = React.useState(false);
@@ -35,6 +35,9 @@ function LoansModal(props) {
   // 0 or 1
   const [selectedAction, setSelectedAction] = React.useState(0);
   const [inputValue, setInputValue] = React.useState(0);
+
+  // "Confirm" or "Enable"
+  const [isEnabledToken, setIsEnabledToken] = React.useState(false);
 
   React.useEffect(() => {
     if (isCanceling) {
@@ -46,15 +49,27 @@ function LoansModal(props) {
 
   React.useEffect(() => {
     if (isValidating) {
-      if (selectedAction) {
-        onFirstActionValidate(inputValue);
+      if (isEnabledToken) {
+        if (selectedAction) {
+          onFirstActionValidate(inputValue);
+        } else {
+          onSecondActionValidate(inputValue);
+        }
       } else {
-        onSecondActionValidate(inputValue);
+        onEnableActionValidate();
       }
       setIsValidating(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValidating]);
+
+  React.useEffect(() => {
+    if (bToken?.allowance > 0) {
+      setIsEnabledToken(true);
+      return;
+    }
+    setIsEnabledToken(false);
+  }, [bToken]);
 
   return (
     <Modal isOpen={modalIsOpen} modalTransition={{ timeout: 250 }}>
@@ -74,65 +89,77 @@ function LoansModal(props) {
         </div>
       </ModalHeader>
       <ModalBody>
-        <Row>
-          <Col>
-            <Button
-              color="dark"
-              id={firstActionTitle}
-              size="lg"
-              block
-              onClick={() => {
-                setSelectedAction(0);
-              }}
-            >
-              {firstActionTitle}
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              color="secondary"
-              id={secondActionTitle}
-              size="lg"
-              block
-              onClick={() => {
-                setSelectedAction(1);
-              }}
-            >
-              {secondActionTitle}
-            </Button>
-          </Col>
-        </Row>
-        <Card className="mt-2">
-          <CardBody>
-            <InputGroup className="mt-2">
-              <Input
-                type="number"
-                style={{ width: "25%" }}
-                onChange={(value) => {
-                  setInputValue(value);
-                }}
-              />
-              <InputGroupText>$</InputGroupText>
-            </InputGroup>
-            <hr class="my-4"></hr>
-            {bToken?.rates.map((rate) => {
-              return (
-                <Row>
-                  <Col xs={2}>
-                    <img
-                      alt={`${rate?.symbol}_logo`}
-                      className="img-center img-fluid"
-                      src={rate?.logoUrl}
-                      style={{ width: "30px" }}
-                    />
-                  </Col>
-                  <Col>APY</Col>
-                  <Col>{rate.value} %</Col>
-                </Row>
-              );
-            })}
-          </CardBody>
-        </Card>
+        {isEnabledToken ? (
+          <>
+            <Row>
+              <Col>
+                <Button
+                  color="dark"
+                  id={firstActionTitle}
+                  size="lg"
+                  block
+                  onClick={() => {
+                    setSelectedAction(0);
+                  }}
+                >
+                  {firstActionTitle}
+                </Button>
+              </Col>
+              <Col>
+                <Button
+                  color="secondary"
+                  id={secondActionTitle}
+                  size="lg"
+                  block
+                  onClick={() => {
+                    setSelectedAction(1);
+                  }}
+                >
+                  {secondActionTitle}
+                </Button>
+              </Col>
+            </Row>
+            <Card className="mt-2">
+              <CardBody>
+                <InputGroup className="mt-2">
+                  <Input
+                    type="number"
+                    style={{ width: "25%" }}
+                    onChange={(value) => {
+                      setInputValue(value);
+                    }}
+                  />
+                  <InputGroupText>$</InputGroupText>
+                </InputGroup>
+                <hr class="my-4"></hr>
+                {bToken?.rates?.map((rate) => {
+                  return (
+                    <Row>
+                      <Col xs={2}>
+                        <img
+                          alt={`${rate?.symbol}_logo`}
+                          className="img-center img-fluid"
+                          src={rate?.logoUrl}
+                          style={{ width: "30px" }}
+                        />
+                      </Col>
+                      <Col>APY</Col>
+                      <Col>{rate.value} %</Col>
+                    </Row>
+                  );
+                })}
+              </CardBody>
+            </Card>
+          </>
+        ) : (
+          <>
+            <p className="text-black">
+              To {selectedAction === 0 ? firstActionTitle : secondActionTitle}{" "}
+              {bToken?.underlyingToken.symbol} to the BabyLoans Protocol, you
+              need to enable it first
+            </p>
+          </>
+        )}
       </ModalBody>
       <ModalFooter>
         <Button
@@ -142,7 +169,7 @@ function LoansModal(props) {
             setIsValidating(true);
           }}
         >
-          {isLoading ? <Spinner /> : validateButtonText}
+          {isLoading ? <Spinner /> : isEnabledToken ? "Confirm" : "Enable"}
         </Button>
         <Button
           color="secondary"
@@ -163,10 +190,10 @@ LoansModal.propTypes = {
   isLoading: propTypes.bool.isRequired,
   onFirstActionValidate: propTypes.func,
   onSecondActionValidate: propTypes.func,
+  onEnableActionValidate: propTypes.func,
   modalIsOpen: propTypes.bool.isRequired,
   firstActionTitle: propTypes.string.isRequired,
   secondActionTitle: propTypes.string.isRequired,
-  validateButtonText: propTypes.string.isRequired,
 };
 
 LoansModal.defaultProps = {

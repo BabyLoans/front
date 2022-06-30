@@ -12,9 +12,16 @@ async function fetchBTokenInfos(web3, bTokenContract) {
   bToken.symbol = await bTokenContract.methods.symbol().call();
   bToken.underlying = await bTokenContract.methods.underlying().call();
   bToken.rate = 0;
+  // bToken.rates to store Supply and borrow rates
 
   let bep20 = await createIBEP20Instance(web3, bToken.underlying);
   bToken.underlyingToken = await fetchIBEP20Infos(web3, bep20);
+
+  let account = (await web3.eth.getAccounts())[0];
+
+  bToken.allowance = await bep20.methods
+    .allowance(bTokenContract._address, account)
+    .call();
 
   bToken.contract = bTokenContract;
 
@@ -28,7 +35,7 @@ async function totalAllowanceUnderlyingContract(web3, bTokenContract) {
 
   let bep20 = await createIBEP20Instance(web3, underlyingContractAddress);
 
-  let account = await web3.eth.getAccounts()[0];
+  let account = (await web3.eth.getAccounts())[0];
 
   return bep20.methods.allowance(bTokenContract._address, account).call();
 }
