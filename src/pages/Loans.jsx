@@ -1,6 +1,6 @@
 import React from "react";
 import { useMoralis } from "react-moralis";
-import { UserBalance, Comptroller, BToken } from "services";
+import { Comptroller, BToken } from "services";
 import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BalanceSupplyBorrowChart from "components/Loans/BalanceSupplyBorrow";
@@ -19,7 +19,7 @@ import LoansTable from "components/Loans/LoansTable";
 function Loans() {
   const { isAuthenticated, web3, isWeb3Enabled, account } = useMoralis();
 
-  const [balance, setBalance] = React.useState([]);
+  const [balanceByBTokens, setBalanceByBTokens] = React.useState([]);
 
   const [bTokens, setBTokens] = React.useState();
   const [accountInfo, setAccountInfo] = React.useState({
@@ -31,20 +31,10 @@ function Loans() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(async () => {
     loadBTokens();
-    loadDeposit();
+    loadAccountInfo();
+    loadBTokensAccountInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, isWeb3Enabled]);
-
-  React.useEffect(() => {
-    if (isLoading) {
-      let promises = [UserBalance.get()];
-
-      Promise.all(promises).then((values) => {
-        setBalance(values[0]);
-        setIsLoading(false);
-      });
-    }
-  }, [isLoading]);
 
   const loadBTokens = async () => {
     if (isLoading || isWeb3Enabled) {
@@ -55,20 +45,29 @@ function Loans() {
       for (let contract of contracts) {
         tokens.push(await BToken.fetchBTokenInfos(web3, contract, account));
       }
-
       console.log(tokens);
 
       setBTokens(tokens);
+      setIsLoading(false);
     }
   };
 
-  const loadDeposit = async () => {
+  const loadAccountInfo = async () => {
     if (isLoading || isWeb3Enabled) {
       let accountUser = await Comptroller.getAccountInfo(web3, account);
       setAccountInfo({
         supply: accountUser["supply"],
         borrow: accountUser["borrow"],
       });
+      setIsLoading(false);
+    }
+  };
+
+  const loadBTokensAccountInfo = async () => {
+    if (isLoading || isWeb3Enabled) {
+      let bTokensAccountInfo = await Comptroller.getBTokensAccountInfo(web3, account);
+      setBalanceByBTokens(bTokensAccountInfo);
+      setIsLoading(false);
     }
   };
 
@@ -99,7 +98,7 @@ function Loans() {
                             />
                           </Col>
                           <Col xs={8}>
-                            <BalanceSupplyBorrowChart datas={balance} />
+                            <BalanceSupplyBorrowChart datas={balanceByBTokens} />
                           </Col>
                           <Col xs={2}>
                             <h5>Your borrow</h5>
