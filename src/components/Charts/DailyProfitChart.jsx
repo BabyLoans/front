@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,9 +9,8 @@ import {
   Tooltip,
   Filler,
   Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import propTypes from 'prop-types';
+} from "chart.js";
+import { Line } from "react-chartjs-2";
 
 ChartJS.register(
   CategoryScale,
@@ -34,9 +33,10 @@ export const options = {
       display: false,
     },
   },
+  maintainAspectRatio: false,
 };
 
-const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export const data = {
   labels,
@@ -45,16 +45,14 @@ export const data = {
       fill: true,
       label: "Daily return on investment",
       data: labels.map(() => Math.random()),
-      borderColor: 'rgba(83, 0, 255, 1)',
-      backgroundColor: 'rgba(244, 242, 255, 1)',
+      borderColor: "rgba(83, 0, 255, 1)",
+      backgroundColor: "rgba(244, 242, 255, 1)",
     },
   ],
 };
 
 function DailyProfitChart() {
-  return <Line options={options} data={data} height={"100%"} options={{ maintainAspectRatio: false }}/>;
+  return <Line options={options} data={data} height={"100%"} />;
 }
-
-
 
 export default DailyProfitChart;

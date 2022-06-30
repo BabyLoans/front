@@ -5,7 +5,7 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function LoansTableRow(props) {
-  const { datas, actionButtonText, onAction } = props;
+  const { bToken, actionButtonText, onAction } = props;
 
   const [isActionSelected, setIsActionSelected] = React.useState(false);
 
@@ -19,17 +19,17 @@ function LoansTableRow(props) {
 
   return (
     <>
-      <tr>
+      <tr className="text-white">
         <th scope="row">
           <img
-            alt="logo coin"
+            alt={`${bToken.underlyingToken.name}_logo`}
             className="img-center img-fluid"
-            src={datas.logoUrl}
+            src={bToken.underlyingToken.logoUrl}
             style={{ width: "25px" }}
           />
         </th>
-        <td>{datas.symbol}</td>
-        <td>{datas.rates[0].value} %</td>
+        <td>{bToken.underlyingToken.symbol}</td>
+        <td>{bToken.rate} %</td>
         <td>
           <Button
             color="dark"
@@ -48,7 +48,7 @@ function LoansTableRow(props) {
 
 LoansTableRow.propTypes = {
   onAction: propTypes.func,
-  datas: propTypes.object.isRequired,
+  bToken: propTypes.object.isRequired,
   actionButtonText: propTypes.string.isRequired,
 };
 

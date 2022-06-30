@@ -1,14 +1,26 @@
 import React from "react";
 import { useMoralis } from "react-moralis";
 import Balance from "components/Dashboard/Balance";
+import DailyProfit from "components/Charts/DailyProfitChart";
+import { BestSupplyRates, UserInvestmentStats } from "services";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBalanceScale, faHandHoldingUsd, faCalendarCheck, faWallet } from "@fortawesome/free-solid-svg-icons";
-import { Container, Card, CardBody, CardSubtitle, CardTitle, Row, Col, Spinner } from "reactstrap";
-import DailyProfit from "components/Charts/DailyProfitChart"; 
 import BestSupplyRate from "components/Dashboard/BestSupplyRate";
 import InvestmentStats from "components/Dashboard/InvestmentStats";
-import { BestSupplyRates, UserInvestmentStats } from "services";
-
+import {
+  faBalanceScale,
+  faHandHoldingUsd,
+  faCalendarCheck,
+  faWallet,
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  Container,
+  Card,
+  CardBody,
+  CardTitle,
+  Row,
+  Col,
+  Spinner,
+} from "reactstrap";
 
 function Dashboard() {
   const { isAuthenticated } = useMoralis();
@@ -18,10 +30,7 @@ function Dashboard() {
 
   React.useEffect(() => {
     if (isLoading) {
-      let promises = [
-        BestSupplyRates.get(),
-        UserInvestmentStats.get(),
-      ];
+      let promises = [BestSupplyRates.get(), UserInvestmentStats.get()];
 
       Promise.all(promises).then((values) => {
         setBestSupplyRates(values[0]);
@@ -41,58 +50,103 @@ function Dashboard() {
         </>
       ) : (
         <>
-        <Container>
-          <br />
-          <Row>
-            <Col md={6}> 
-              <Card className="card-width" style={{ borderRadius: "24px", backgroundColor: "rgb(30 32 49)"}}>
-                <CardBody>
-                  <CardTitle>
-                    <h5 color="white"> <FontAwesomeIcon icon={faBalanceScale} /> Balance</h5>
-                  </CardTitle>
-                  <p>Overview of your wallet</p><br />
-                  <Balance isAuthenticated={isAuthenticated}/>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md={6}> 
-              <Card className="card-width" style={{ borderRadius: "24px", backgroundColor: "rgb(30 32 49)"}}>
-                <CardBody>
-                  <CardTitle><h5> <FontAwesomeIcon icon={faWallet} /> Investment Stats</h5></CardTitle>
-                  <p>Statistics of your return on investment</p><br />
-                  <InvestmentStats datas={investmentStats} />
-                </CardBody>
-              </Card>
-            </Col>
-            <Row><br /></Row>
-            <Col md={5}> 
-              <Card className="card card-width" style={{ borderRadius: "24px", backgroundColor: "rgb(30 32 49)"}}>
-                <CardBody>
-                  <CardTitle><h5><FontAwesomeIcon icon={faHandHoldingUsd} /> Best supply rates</h5></CardTitle>
-                  <p>Overview of the best returns on assets</p><br />
-                  <Row>
-                    {bestSupplyRates.map((token) => {
-                      return (
-                        <BestSupplyRate datas={token} />
-                      );
-                    })}
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md={7}> 
-              <Card className="card-width" style={{ borderRadius: "24px", backgroundColor: "rgb(30 32 49)"}}>
-                <CardBody>
-                  <CardTitle><h5><FontAwesomeIcon icon={faCalendarCheck} /> Daily Profits</h5></CardTitle>
-                  <p>Graphical representation of your daily returns</p><br />
-                  <Row>
-                    <DailyProfit/>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          <br />
+          <Container>
+            <br />
+            <Row>
+              <Col md={6}>
+                <Card
+                  className="card-width"
+                  style={{
+                    borderRadius: "24px",
+                    backgroundColor: "rgb(30 32 49)",
+                  }}
+                >
+                  <CardBody>
+                    <CardTitle>
+                      <h5 color="white">
+                        {" "}
+                        <FontAwesomeIcon icon={faBalanceScale} /> Balance
+                      </h5>
+                    </CardTitle>
+                    <p>Overview of your wallet</p>
+                    <br />
+                    <Balance isAuthenticated={isAuthenticated} />
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md={6}>
+                <Card
+                  className="card-width"
+                  style={{
+                    borderRadius: "24px",
+                    backgroundColor: "rgb(30 32 49)",
+                  }}
+                >
+                  <CardBody>
+                    <CardTitle>
+                      <h5>
+                        {" "}
+                        <FontAwesomeIcon icon={faWallet} /> Investment Stats
+                      </h5>
+                    </CardTitle>
+                    <p>Statistics of your return on investment</p>
+                    <br />
+                    <InvestmentStats datas={investmentStats} />
+                  </CardBody>
+                </Card>
+              </Col>
+              <Row>
+                <br />
+              </Row>
+              <Col md={5}>
+                <Card
+                  className="card card-width"
+                  style={{
+                    borderRadius: "24px",
+                    backgroundColor: "rgb(30 32 49)",
+                  }}
+                >
+                  <CardBody>
+                    <CardTitle>
+                      <h5>
+                        <FontAwesomeIcon icon={faHandHoldingUsd} /> Best supply
+                        rates
+                      </h5>
+                    </CardTitle>
+                    <p>Overview of the best returns on assets</p>
+                    <br />
+                    <Row>
+                      {bestSupplyRates.map((token) => {
+                        return <BestSupplyRate datas={token} />;
+                      })}
+                    </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md={7}>
+                <Card
+                  className="card-width"
+                  style={{
+                    borderRadius: "24px",
+                    backgroundColor: "rgb(30 32 49)",
+                  }}
+                >
+                  <CardBody>
+                    <CardTitle>
+                      <h5>
+                        <FontAwesomeIcon icon={faCalendarCheck} /> Daily Profits
+                      </h5>
+                    </CardTitle>
+                    <p>Graphical representation of your daily returns</p>
+                    <br />
+                    <Row>
+                      <DailyProfit />
+                    </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+            <br />
           </Container>
         </>
       )}

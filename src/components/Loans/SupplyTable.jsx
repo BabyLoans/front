@@ -8,11 +8,12 @@ import LoansTableRow from "components/Loans/LoansTableRow";
 import { faSackDollar } from "@fortawesome/free-solid-svg-icons";
 
 function SupplyTable(props) {
-  const { tokens } = props;
+  const { bTokens } = props;
   const { web3, account, isAuthenticated } = useMoralis();
 
-  const [modalToken, setModalToken] = React.useState();
+  const [modalBToken, setModalBToken] = React.useState();
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const [modalIsLoading, setModalIsLoading] = React.useState(false);
 
   // "Confirm" or "Enable"
   const [modalValidateButtonText, setModalValidateButtonText] =
@@ -20,10 +21,10 @@ function SupplyTable(props) {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(async () => {
-    if (modalToken) {
+    if (modalBToken) {
       let allowance = await BToken.totalAllowanceUnderlyingContract(
         web3,
-        modalToken
+        modalBToken.contract
       );
 
       if (allowance === 0) {
@@ -33,7 +34,7 @@ function SupplyTable(props) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modalToken]);
+  }, [modalBToken]);
 
   return (
     <>
@@ -45,11 +46,11 @@ function SupplyTable(props) {
           return (
             <LoansTableRow
               key={`SupplyRow_${index}`}
-              datas={token}
+              bToken={token}
               actionButtonText="Supply"
               onAction={() => {
                 if (isAuthenticated && account) {
-                  setModalToken(token);
+                  setModalBToken(token);
                   setModalIsOpen(true);
                 } else {
                   alert("Please connect before using supply functions");
@@ -58,24 +59,32 @@ function SupplyTable(props) {
             />
           );
         }}
-        tokens={tokens}
+        bTokens={bTokens}
       />
       <LoansModal
-        bodyTitle="SUPPLY"
-        bodyTitleAction="WITHDRAW"
-        token={modalToken}
+        bToken={modalBToken}
         modalIsOpen={modalIsOpen}
+        firstActionTitle="SUPPLY"
+        secondActionTitle="WITHDRAW"
         validateButtonText={modalValidateButtonText}
         onCancel={() => {
           setModalIsOpen(false);
+          setModalIsLoading(false);
         }}
-        onValidate={async () => {
+        onFirstActionValidate={async () => {
           // Call smart contract
           if (modalValidateButtonText === "Enable") {
-            BToken.approveUnderlyingContract(web3, modalToken, account);
+            BToken.approveUnderlyingContract(web3, modalBToken, account);
           }
 
           setModalIsOpen(false);
+          setModalIsLoading(false);
+        }}
+        onSecondActionValidate={async () => {
+          // Call smart contract
+
+          setModalIsOpen(false);
+          setModalIsLoading(false);
         }}
       />
     </>
@@ -83,7 +92,7 @@ function SupplyTable(props) {
 }
 
 SupplyTable.propTypes = {
-  tokens: propTypes.array,
+  bTokens: propTypes.array,
 };
 
 export default SupplyTable;

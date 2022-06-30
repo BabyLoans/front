@@ -4,10 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, CardBody, CardSubtitle, CardTitle, Table } from "reactstrap";
 
 function LoansBaseTable(props) {
-  const { tokens, cardIcon, cardTitle, cardSubtitle, generateTableRow } = props;
+  const { bTokens, cardIcon, cardTitle, cardSubtitle, generateTableRow } =
+    props;
 
   return (
-    <Card className="card-width" style={{ borderRadius: "24px", backgroundColor: "rgb(30 32 49)"}}>
+    <Card
+      className="card-width"
+      style={{ borderRadius: "24px", backgroundColor: "rgb(30 32 49)" }}
+    >
       <CardBody>
         <CardTitle>
           <h5>
@@ -27,7 +31,7 @@ function LoansBaseTable(props) {
             </tr>
           </thead>
           <tbody>
-            {tokens?.map((token, index) => generateTableRow(token, index))}
+            {bTokens?.map((token, index) => generateTableRow(token, index))}
           </tbody>
         </Table>
       </CardBody>
@@ -36,7 +40,7 @@ function LoansBaseTable(props) {
 }
 
 LoansBaseTable.propTypes = {
-  tokens: propTypes.array,
+  bTokens: propTypes.array,
   cardIcon: propTypes.object.isRequired,
   cardTitle: propTypes.string.isRequired,
   cardSubtitle: propTypes.string.isRequired,

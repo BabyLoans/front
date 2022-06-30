@@ -92,7 +92,6 @@ const plugins = [
 
 function BalanceChart(props) {
   const { data, style, total } = props;
-  const legendFontSize = props.legendFontSize || 14;
 
   const options = {
     responsive: true,

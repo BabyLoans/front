@@ -2,7 +2,7 @@ import { useState } from "react";
 import Blockie from "../Blockie";
 import { connectors } from "./config";
 import Address from "../Address/Address";
-import { Card, Modal } from "antd";
+import { Modal } from "antd";
 import { Button } from "reactstrap";
 import { useMoralis } from "react-moralis";
 import { getExplorer } from "helpers/networks";
@@ -49,14 +49,19 @@ const styles = {
 };
 
 function Account() {
-  const { authenticate, chainId, logout, account, isAuthenticated } = useMoralis();
+  const { authenticate, chainId, logout, account, isAuthenticated } =
+    useMoralis();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAuthModalVisible, setIsAuthModalVisible] = useState(false);
-  
+
   if (!isAuthenticated || !account) {
     return (
       <>
-        <Button style={{ backgroundColor: "#e14eca"}} size="sm" onClick={() => setIsAuthModalVisible(true)}> 
+        <Button
+          style={{ backgroundColor: "#e14eca" }}
+          size="sm"
+          onClick={() => setIsAuthModalVisible(true)}
+        >
           <FontAwesomeIcon icon={faWallet} /> Connect Wallet
         </Button>
         <Modal
@@ -71,7 +76,15 @@ function Account() {
           style={{ fontSize: "16px", fontWeight: "500" }}
           width="340px"
         >
-          <div style={{ padding: "10px", display: "flex", justifyContent: "center", fontWeight: "700", fontSize: "20px" }}>
+          <div
+            style={{
+              padding: "10px",
+              display: "flex",
+              justifyContent: "center",
+              fontWeight: "700",
+              fontSize: "20px",
+            }}
+          >
             Connect Wallet
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
@@ -101,9 +114,13 @@ function Account() {
 
   return (
     <>
-      <Button style={{ backgroundColor: "#e14eca"}} size="sm" onClick={() => setIsModalVisible(true)}>
-        <h6 style={{ marginRight: "5px", display: "inline", ...styles.text }}>{getEllipsisTxt(account, 6)} 
-          { ' ' } <Blockie currentWallet scale={2} />
+      <Button
+        style={{ backgroundColor: "#e14eca" }}
+        size="sm"
+        onClick={() => setIsModalVisible(true)}
+      >
+        <h6 style={{ marginRight: "5px", display: "inline", ...styles.text }}>
+          {getEllipsisTxt(account, 6)} <Blockie currentWallet scale={2} />
         </h6>
       </Button>
       <Modal
@@ -116,9 +133,14 @@ function Account() {
           backgroundColor: "rgb(30, 32, 49)",
         }}
       >
-        <h5>Account</h5><br />
+        <h5>Account</h5>
+        <br />
         <Address avatar="left" size={6} copyable style={{ fontSize: "20px" }} />
-        <a href={`${getExplorer(chainId)}/address/${account}`} target="_blank" rel="noreferrer">
+        <a
+          href={`${getExplorer(chainId)}/address/${account}`}
+          target="_blank"
+          rel="noreferrer"
+        >
           <SelectOutlined style={{ marginRight: "5px" }} />
           View on Explorer
         </a>
@@ -131,7 +153,7 @@ function Account() {
             borderRadius: "0.5rem",
             fontSize: "16px",
             fontWeight: "500",
-            backgroundColor: "#e14eca"
+            backgroundColor: "#e14eca",
           }}
           onClick={async () => {
             await logout();

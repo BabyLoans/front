@@ -1,15 +1,18 @@
 import React from "react";
 import propTypes from "prop-types";
 import LoansModal from "./LoansModal";
+import { useMoralis } from "react-moralis";
 import LoansBaseContainer from "./LoansBaseTable";
 import LoansTableRow from "components/Loans/LoansTableRow";
 import { faHandHoldingUsd } from "@fortawesome/free-solid-svg-icons";
 
 function BorrowTable(props) {
-  const { tokens } = props;
+  const { bTokens } = props;
+  const { account, isAuthenticated } = useMoralis();
 
-  const [modalToken, setModalToken] = React.useState();
+  const [modalBToken, setModalBToken] = React.useState();
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const [modalIsLoading, setModalIsLoading] = React.useState(false);
 
   return (
     <>
@@ -21,27 +24,35 @@ function BorrowTable(props) {
           return (
             <LoansTableRow
               key={`BorrowRow_${index}`}
-              datas={token}
+              bToken={token}
               actionButtonText="Borrow"
               onAction={() => {
-                setModalToken(token);
-                setModalIsOpen(true);
+                if (isAuthenticated && account) {
+                  setModalBToken(token);
+                  setModalIsOpen(true);
+                } else {
+                  alert("Please connect before using supply functions");
+                }
               }}
             />
           );
         }}
-        tokens={tokens}
+        bTokens={bTokens}
       />
       <LoansModal
-        bodyTitle="BORROW"
-        bodyTitleAction="REPAY"
-        token={modalToken}
+        bToken={modalBToken}
         modalIsOpen={modalIsOpen}
+        firstActionTitle="BORROW"
+        secondActionTitle="REPAY"
         validateButtonText="Borrowing"
         onCancel={() => {
           setModalIsOpen(false);
         }}
-        onValidate={() => {
+        onFirstActionValidate={() => {
+          // Call smart contract
+          setModalIsOpen(false);
+        }}
+        onSecondActionValidate={() => {
           // Call smart contract
           setModalIsOpen(false);
         }}
@@ -51,7 +62,7 @@ function BorrowTable(props) {
 }
 
 BorrowTable.propTypes = {
-  tokens: propTypes.array,
+  bTokens: propTypes.array,
 };
 
 export default BorrowTable;

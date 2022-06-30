@@ -29,11 +29,15 @@ function buildDatasetsFromDatas(datas) {
   if (datas !== null) {
     for (let data of datas) {
       datasets.labels.push(data.name);
-      datasets.datasets[0].data.push(parseFloat(data.balance).toFixed(data.decimal));
-      datasets.datasets[0].backgroundColor.push("#"+Math.random().toString(16).substr(-6));
+      datasets.datasets[0].data.push(
+        parseFloat(data.balance).toFixed(data.decimal)
+      );
+      datasets.datasets[0].backgroundColor.push(
+        "#" + Math.random().toString(16).substr(-6)
+      );
     }
   }
-  
+
   return datasets;
 }
 
@@ -47,17 +51,18 @@ function Balance(props) {
     if (!isLoading) {
       let datasetsTmp = buildDatasetsFromDatas(data);
       setDatasets(datasetsTmp);
-      if(datasetsTmp.datasets[0].data.length > 0) {
+      if (datasetsTmp.datasets[0].data.length > 0) {
         setIsVisibleChart(true);
       } else {
         setIsVisibleChart(false);
       }
     }
-  }, [isLoading]) 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
 
   return (
     <>
-      {!isVisibleChart || !isAuthenticated? (
+      {!isVisibleChart || !isAuthenticated ? (
         <>
           <center>
             <FontAwesomeIcon icon={faWallet} /> Wallet not connected or empty

@@ -1,6 +1,6 @@
 import React from "react";
 import propTypes from "prop-types";
-import { Row, Col, Badge } from "reactstrap";
+import { Row, Col } from "reactstrap";
 import BestSupplyRateChart from "components/Charts/BestSupplyRateChart";
 
 function buildDatasetsFromDatas(datas) {
@@ -28,7 +28,9 @@ function BestSupplyRate(props) {
 
   return (
     <>
-      <br /><br /><br />
+      <br />
+      <br />
+      <br />
       <Row>
         <Col md={1}></Col>
         <Col md={2}>

@@ -1,5 +1,8 @@
 import React from "react";
-import { UserSupply, UserBorrow, UserBalance } from "services";
+import { useMoralis } from "react-moralis";
+import { UserBalance, Comptroller, BToken } from "services";
+import SupplyTable from "components/Loans/SupplyTable";
+import BorrowTable from "components/Loans/BorrowTable";
 import BalanceSupplyBorrowChart from "components/Loans/BalanceSupplyBorrow";
 import {
   Container,
@@ -10,25 +13,29 @@ import {
   Spinner,
   Progress,
 } from "reactstrap";
-import { TokenLending } from "services";
-import SupplyTable from "components/Loans/SupplyTable";
-import BorrowTable from "components/Loans/BorrowTable";
-import { useMoralis } from "react-moralis";
 
 function Loans() {
   const { web3, isWeb3Enabled } = useMoralis();
 
   const [balance, setBalance] = React.useState([]);
 
-  const [tokens, setTokens] = React.useState();
+  const [bTokens, setBTokens] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(async () => {
     if (isLoading || isWeb3Enabled) {
-      let tokensTmp = await TokenLending.fetchTokens(web3);
-      console.log(tokensTmp);
-      setTokens(tokensTmp);
+      let contracts = await Comptroller.fetchBTokenContracts(web3);
+
+      let tokens = [];
+
+      for (let contract of contracts) {
+        tokens.push(await BToken.fetchBTokenInfos(web3, contract));
+      }
+
+      console.log(tokens);
+
+      setBTokens(tokens);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, isWeb3Enabled]);
@@ -58,7 +65,13 @@ function Loans() {
             <br />
             <Row>
               <Col md={12}>
-                <Card className="card-width" style={{ borderRadius: "24px", backgroundColor: "rgb(30 32 49)"}}>
+                <Card
+                  className="card-width"
+                  style={{
+                    borderRadius: "24px",
+                    backgroundColor: "rgb(30 32 49)",
+                  }}
+                >
                   <CardBody>
                     <Row>
                       <Col xs={2}>
@@ -84,11 +97,11 @@ function Loans() {
             </Row>
             <Row>
               <Col md={6}>
-                <SupplyTable tokens={tokens} />
+                <SupplyTable bTokens={bTokens} />
               </Col>
 
               <Col md={6}>
-                <BorrowTable tokens={tokens} />
+                <BorrowTable bTokens={bTokens} />
               </Col>
             </Row>
           </Container>
