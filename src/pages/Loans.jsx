@@ -23,8 +23,8 @@ function Loans() {
 
   const [bTokens, setBTokens] = React.useState();
   const [accountInfo, setAccountInfo] = React.useState({
-    "supply" : 0,
-    "borrow": 0
+    supply: 0,
+    borrow: 0,
   });
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -66,8 +66,8 @@ function Loans() {
     if (isLoading || isWeb3Enabled) {
       let accountUser = await Comptroller.getAccountInfo(web3, account);
       setAccountInfo({
-        "supply" : accountUser['supply'],
-        "borrow" : accountUser['borrow']
+        supply: accountUser["supply"],
+        borrow: accountUser["borrow"],
       });
     }
   };
@@ -92,7 +92,11 @@ function Loans() {
                           <Col xs={2}>
                             <h5>Your deposit</h5>
                             <p className="mb-2">$ {accountInfo.supply}</p>
-                            <Progress color="success" value={accountInfo.supply} max={5000} />
+                            <Progress
+                              color="success"
+                              value={accountInfo.supply}
+                              max={5000}
+                            />
                           </Col>
                           <Col xs={8}>
                             <BalanceSupplyBorrowChart datas={balance} />
@@ -100,7 +104,11 @@ function Loans() {
                           <Col xs={2}>
                             <h5>Your borrow</h5>
                             <p className="mb-2">$ {accountInfo.borrow}</p>
-                            <Progress color="success" value={accountInfo.borrow} max={5000} />
+                            <Progress
+                              color="success"
+                              value={accountInfo.borrow}
+                              max={5000}
+                            />
                           </Col>
                         </>
                       )}
@@ -131,10 +139,10 @@ function Loans() {
               reloadBTokens={loadBTokens}
               cardSubtitle="Supply your assets on the BSC blockchain"
               onFirstActionValidate={async (bToken, input) => {
-                BToken.mint(web3, bToken, input, account);
+                BToken.mint(web3, bToken.contract, input, account);
               }}
               onSecondActionValidate={async (bToken, input) => {
-                BToken.redeem(web3, bToken, input, account);
+                BToken.redeem(web3, bToken.contract, input, account);
               }}
               getMaxInputFirstAction={(bToken) => {
                 return bToken.underlyingToken.balanceOf;
