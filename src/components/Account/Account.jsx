@@ -53,7 +53,6 @@ function Account() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAuthModalVisible, setIsAuthModalVisible] = useState(false);
 
-  console.log(chainId)
   if (!isAuthenticated || !account) {
     return (
       <>

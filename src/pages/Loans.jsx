@@ -17,16 +17,21 @@ import {
 import LoansTable from "components/Loans/LoansTable";
 
 function Loans() {
-  const { isAuthenticated, web3, isWeb3Enabled } = useMoralis();
+  const { isAuthenticated, web3, isWeb3Enabled, account } = useMoralis();
 
   const [balance, setBalance] = React.useState([]);
 
   const [bTokens, setBTokens] = React.useState();
+  const [accountInfo, setAccountInfo] = React.useState({
+    "supply" : 0,
+    "borrow": 0
+  });
   const [isLoading, setIsLoading] = React.useState(true);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(async () => {
     loadBTokens();
+    loadDeposit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, isWeb3Enabled]);
 
@@ -57,6 +62,16 @@ function Loans() {
     }
   };
 
+  const loadDeposit = async () => {
+    if (isLoading || isWeb3Enabled) {
+      let accountUser = await Comptroller.getAccountInfo(web3, account);
+      setAccountInfo({
+        "supply" : accountUser['supply'],
+        "borrow" : accountUser['borrow']
+      });
+    }
+  };
+
   return (
     <>
       <Container>
@@ -76,16 +91,16 @@ function Loans() {
                         <>
                           <Col xs={2}>
                             <h5>Your deposit</h5>
-                            <p className="mb-2">$ 5000.00</p>
-                            <Progress color="success" value={2500} max={5000} />
+                            <p className="mb-2">$ {accountInfo.supply}</p>
+                            <Progress color="success" value={accountInfo.supply} max={5000} />
                           </Col>
                           <Col xs={8}>
                             <BalanceSupplyBorrowChart datas={balance} />
                           </Col>
                           <Col xs={2}>
                             <h5>Your borrow</h5>
-                            <p className="mb-2">$ 5000.00</p>
-                            <Progress color="success" value={1300} max={5000} />
+                            <p className="mb-2">$ {accountInfo.borrow}</p>
+                            <Progress color="success" value={accountInfo.borrow} max={5000} />
                           </Col>
                         </>
                       )}
