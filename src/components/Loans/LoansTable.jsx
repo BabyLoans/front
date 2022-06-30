@@ -47,7 +47,7 @@ function LoansTable(props) {
             <LoansTableRow
               key={`SupplyRow_${index}`}
               bToken={token}
-              actionButtonText="Supply"
+              actionButtonText={cardTitle}
               onAction={() => {
                 if (isAuthenticated && account) {
                   setModalBToken(token);
