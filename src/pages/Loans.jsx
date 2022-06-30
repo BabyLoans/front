@@ -1,7 +1,5 @@
 import React from "react";
 import { useMoralis } from "react-moralis";
-import SupplyTable from "components/Loans/SupplyTable";
-import BorrowTable from "components/Loans/BorrowTable";
 import { UserBalance, Comptroller, BToken } from "services";
 import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,6 +14,7 @@ import {
   Progress,
   Alert,
 } from "reactstrap";
+import LoansTable from "components/Loans/LoansTable";
 
 function Loans() {
   const { isAuthenticated, web3, isWeb3Enabled } = useMoralis();
@@ -114,11 +113,25 @@ function Loans() {
         </Row>
         <Row>
           <Col md={6}>
-            <SupplyTable bTokens={bTokens} reloadBTokens={loadBTokens} />
+            <LoansTable
+              bTokens={bTokens}
+              cardTitle="Supply"
+              reloadBTokens={loadBTokens}
+              cardSubtitle="Supply your assets on the BSC blockchain"
+              onFirstActionValidate={async (_, input) => {}}
+              onSecondActionValidate={async (_, input) => {}}
+            />
           </Col>
 
           <Col md={6}>
-            <BorrowTable bTokens={bTokens} />
+            <LoansTable
+              bTokens={bTokens}
+              cardTitle="Borrow"
+              reloadBTokens={loadBTokens}
+              cardSubtitle="Borrow assets on the BSC blockchain"
+              onFirstActionValidate={async (_, input) => {}}
+              onSecondActionValidate={async (_, input) => {}}
+            />
           </Col>
         </Row>
       </Container>

@@ -7,8 +7,15 @@ import LoansBaseContainer from "./LoansBaseTable";
 import LoansTableRow from "components/Loans/LoansTableRow";
 import { faSackDollar } from "@fortawesome/free-solid-svg-icons";
 
-function SupplyTable(props) {
-  const { bTokens, reloadBTokens } = props;
+function LoansTable(props) {
+  const {
+    bTokens,
+    cardTitle,
+    reloadBTokens,
+    cardSubtitle,
+    onFirstActionValidate,
+    onSecondActionValidate,
+  } = props;
   const { web3, account, isAuthenticated } = useMoralis();
 
   const [modalBToken, setModalBToken] = React.useState();
@@ -28,8 +35,8 @@ function SupplyTable(props) {
     <>
       <LoansBaseContainer
         cardIcon={faSackDollar}
-        cardTitle="Supply"
-        cardSubtitle="Supply your assets on the BSC blockchain"
+        cardTitle={cardTitle}
+        cardSubtitle={cardSubtitle}
         generateTableRow={(token, index) => {
           return (
             <LoansTableRow
@@ -59,14 +66,16 @@ function SupplyTable(props) {
           setModalIsOpen(false);
           setModalIsLoading(false);
         }}
-        onFirstActionValidate={async () => {
+        onFirstActionValidate={async (input) => {
           // Call smart contract
+          await onFirstActionValidate(web3, input);
 
           setModalIsOpen(false);
           setModalIsLoading(false);
         }}
-        onSecondActionValidate={async () => {
+        onSecondActionValidate={async (input) => {
           // Call smart contract
+          await onSecondActionValidate(web3, input);
 
           setModalIsOpen(false);
           setModalIsLoading(false);
@@ -94,9 +103,22 @@ function SupplyTable(props) {
   );
 }
 
-SupplyTable.propTypes = {
+LoansTable.propTypes = {
   bTokens: propTypes.array,
+  onFirstActionValidate: propTypes.func,
+  onSecondActionValidate: propTypes.func,
+  cardTitle: propTypes.string.isRequired,
   reloadBTokens: propTypes.func.isRequired,
+  cardSubtitle: propTypes.string.isRequired,
 };
 
-export default SupplyTable;
+LoansTable.defaultProps = {
+  onFirstActionValidate: () => {
+    // Do nothing
+  },
+  onSecondActionValidate: () => {
+    // Do nothing
+  },
+};
+
+export default LoansTable;
