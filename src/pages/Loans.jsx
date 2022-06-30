@@ -19,8 +19,6 @@ function Loans() {
   const { web3, isWeb3Enabled } = useMoralis();
 
   const [balance, setBalance] = React.useState([]);
-  //const [supply, setSupply] = React.useState([]);
-  //const [borrow, setBorrow] = React.useState([]);
 
   const [tokens, setTokens] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
@@ -28,25 +26,19 @@ function Loans() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(async () => {
     if (isLoading || isWeb3Enabled) {
-      let tokens = await TokenLending.fetchTokens(web3);
-      console.log(tokens);
-      setTokens(tokens);
+      let tokensTmp = await TokenLending.fetchTokens(web3);
+      console.log(tokensTmp);
+      setTokens(tokensTmp);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, isWeb3Enabled]);
 
   React.useEffect(() => {
     if (isLoading) {
-      let promises = [
-        UserBalance.get(),
-        // UserSupply.get(),
-        // UserBorrow.get()
-      ];
+      let promises = [UserBalance.get()];
 
       Promise.all(promises).then((values) => {
         setBalance(values[0]);
-        // setSupply(values[1]);
-        // setBorrow(values[2]);
         setIsLoading(false);
       });
     }
