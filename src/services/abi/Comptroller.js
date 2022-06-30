@@ -27,4 +27,20 @@ async function fetchBTokenContracts(web3) {
   return bTokens;
 }
 
-export { createComptrollerInstance, fetchBTokenContracts };
+async function getAccountInfo(web3, address) {
+  let bTokens = await fetchBTokenContracts(web3);
+  let totalSupply = 0;
+  let totalBorrow = 0;
+  for (let bToken of bTokens) {
+    let account = await bToken.methods.getAccountInfo(address).call();
+    totalSupply += parseFloat(account[1]);
+    totalBorrow += parseFloat(account[2]);
+  }
+
+  return {
+    "supply" : totalSupply,
+    "borrow" : totalBorrow
+  };
+}
+
+export { createComptrollerInstance, fetchBTokenContracts, getAccountInfo };
