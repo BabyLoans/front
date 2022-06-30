@@ -38,8 +38,8 @@ async function getAccountInfo(web3, address) {
   }
 
   return {
-    "supply" : totalSupply,
-    "borrow" : totalBorrow
+    supply: totalSupply,
+    borrow: totalBorrow,
   };
 }
 

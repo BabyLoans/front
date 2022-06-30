@@ -79,12 +79,16 @@ function LoansTable(props) {
           // Call smart contract
           await onFirstActionValidate(modalBToken, input);
 
+          setBTokensIsReloading(true);
+
           setModalIsOpen(false);
           setModalIsLoading(false);
         }}
         onSecondActionValidate={async (input) => {
           // Call smart contract
           await onSecondActionValidate(modalBToken, input);
+
+          setBTokensIsReloading(true);
 
           setModalIsOpen(false);
           setModalIsLoading(false);

@@ -6,7 +6,6 @@ import { Modal } from "antd";
 import { Button } from "reactstrap";
 import { useMoralis } from "react-moralis";
 import { getExplorer } from "helpers/networks";
-import { SelectOutlined } from "@ant-design/icons";
 import { getEllipsisTxt } from "helpers/formatters";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -49,7 +48,8 @@ const styles = {
 };
 
 function Account() {
-  const { authenticate, chainId, logout, account, isAuthenticated } = useMoralis();
+  const { authenticate, chainId, logout, account, isAuthenticated } =
+    useMoralis();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAuthModalVisible, setIsAuthModalVisible] = useState(false);
 
@@ -126,15 +126,18 @@ function Account() {
           backgroundColor: "rgb(30, 32, 49)",
         }}
       >
-        <h5>Account</h5><br />
-        <Address avatar="left" size={6} copyable /><br />
+        <h5>Account</h5>
+        <br />
+        <Address avatar="left" size={6} copyable />
+        <br />
         <a
           href={`${getExplorer(chainId)}/address/${account}`}
           target="_blank"
           rel="noreferrer"
         >
           View on Explorer
-        </a><br />
+        </a>
+        <br />
         <Button
           size="large"
           type="primary"
