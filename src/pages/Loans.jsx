@@ -1,6 +1,6 @@
 import React from "react";
 import { useMoralis } from "react-moralis";
-import { UserBalance, Comptroller, BToken } from "services";
+import { Comptroller, BToken } from "services";
 import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BalanceSupplyBorrowChart from "components/Loans/BalanceSupplyBorrow";
@@ -36,16 +36,6 @@ function Loans() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, isWeb3Enabled]);
 
-  React.useEffect(() => {
-    if (isLoading) {
-      let promises = [UserBalance.get()];
-
-      Promise.all(promises).then((values) => {
-        setIsLoading(false);
-      });
-    }
-  }, [isLoading]);
-
   const loadBTokens = async () => {
     if (isLoading || isWeb3Enabled) {
       let contracts = await Comptroller.fetchBTokenContracts(web3);
@@ -58,6 +48,7 @@ function Loans() {
       console.log(tokens);
 
       setBTokens(tokens);
+      setIsLoading(false);
     }
   };
 
@@ -68,6 +59,7 @@ function Loans() {
         "supply" : accountUser['supply'],
         "borrow" : accountUser['borrow']
       });
+      setIsLoading(false);
     }
   };
 
@@ -75,10 +67,9 @@ function Loans() {
     if (isLoading || isWeb3Enabled) {
       let bTokensAccountInfo = await Comptroller.getBTokensAccountInfo(web3, account);
       setBalanceByBTokens(bTokensAccountInfo);
+      setIsLoading(false);
     }
   };
-
-  
 
   return (
     <>
