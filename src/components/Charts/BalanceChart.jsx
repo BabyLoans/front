@@ -2,6 +2,9 @@ import React from "react";
 import propTypes from "prop-types";
 import "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
+import { Alert } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCoins } from "@fortawesome/free-solid-svg-icons";
 
 const plugins = [
   {
@@ -94,7 +97,6 @@ function BalanceChart(props) {
 
   const { data, style } = props;
   const legendFontSize = props.legendFontSize || 14;
-
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -123,7 +125,15 @@ function BalanceChart(props) {
   };
 
   return (
-    <Doughnut data={data} options={options} plugins={plugins} style={style} />
+    <>
+      { data.datasets[0].data.length > 0 ? (
+        <Doughnut data={data} options={options} plugins={plugins} style={style} />
+      ) : (
+        <Alert color="warning">
+         <FontAwesomeIcon icon={faCoins} /> No tokens found !
+        </Alert>
+      )}
+    </>
   );
 }
 

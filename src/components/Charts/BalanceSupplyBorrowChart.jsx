@@ -108,6 +108,7 @@ function BalanceChart(props) {
         maxFontSize: 20,
         minFontSize: 20,
         lineHeight: 20,
+        color: "white"
       },
     },
     plugins: {

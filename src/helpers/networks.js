@@ -16,6 +16,14 @@ export const networkConfigs = {
     rpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545/",
     blockExplorerUrl: "https://testnet.bscscan.com/",
   },
+  "0x1": {
+    chainId: 1,
+    chainName: "Ethereum",
+    currencyName: "ETH",
+    currencySymbol: "ETH",
+    rpcUrl: "https://mainnet.infura.io/v3/",
+    blockExplorerUrl: "https://etherscan.io"
+  },
 };
 
 export const getNativeByChain = (chain) =>
