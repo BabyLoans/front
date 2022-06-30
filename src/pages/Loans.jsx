@@ -136,7 +136,7 @@ function Loans() {
               bTokens={bTokens}
               cardTitle="Supply"
               reloadBTokens={loadBTokens}
-              cardSubtitle="Supply your assets on the BSC blockchain"
+              cardSubtitle="Supply your assets on the blockchain"
               onFirstActionValidate={async (bToken, input) => {
                 BToken.mint(web3, bToken.contract, input, account);
               }}
@@ -157,7 +157,7 @@ function Loans() {
               bTokens={bTokens}
               cardTitle="Borrow"
               reloadBTokens={loadBTokens}
-              cardSubtitle="Borrow assets on the BSC blockchain"
+              cardSubtitle="Borrow assets on the blockchain"
               onFirstActionValidate={async (bToken, input) => {}}
               onSecondActionValidate={async (bToken, input) => {}}
             />
