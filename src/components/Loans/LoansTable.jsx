@@ -11,10 +11,12 @@ function LoansTable(props) {
   const {
     bTokens,
     cardTitle,
-    reloadBTokens,
     cardSubtitle,
+    reloadBTokens,
     onFirstActionValidate,
     onSecondActionValidate,
+    getMaxInputFirstAction,
+    getMaxInputSecondAction,
   } = props;
   const { web3, account, isAuthenticated } = useMoralis();
 
@@ -60,6 +62,13 @@ function LoansTable(props) {
         bToken={modalBToken}
         modalIsOpen={modalIsOpen}
         isLoading={modalIsLoading}
+        getMaxInput={(mode) => {
+          if (mode === 0) {
+            return getMaxInputFirstAction(modalBToken);
+          }
+
+          return getMaxInputSecondAction(modalBToken);
+        }}
         firstActionTitle="SUPPLY"
         secondActionTitle="WITHDRAW"
         onCancel={() => {
@@ -68,14 +77,14 @@ function LoansTable(props) {
         }}
         onFirstActionValidate={async (input) => {
           // Call smart contract
-          await onFirstActionValidate(web3, input);
+          await onFirstActionValidate(modalBToken, input);
 
           setModalIsOpen(false);
           setModalIsLoading(false);
         }}
         onSecondActionValidate={async (input) => {
           // Call smart contract
-          await onSecondActionValidate(web3, input);
+          await onSecondActionValidate(modalBToken, input);
 
           setModalIsOpen(false);
           setModalIsLoading(false);
@@ -110,6 +119,8 @@ LoansTable.propTypes = {
   cardTitle: propTypes.string.isRequired,
   reloadBTokens: propTypes.func.isRequired,
   cardSubtitle: propTypes.string.isRequired,
+  getMaxInputFirstAction: propTypes.func.isRequired,
+  getMaxInputSecondAction: propTypes.func.isRequired,
 };
 
 LoansTable.defaultProps = {

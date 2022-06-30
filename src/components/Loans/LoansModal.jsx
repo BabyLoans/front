@@ -22,6 +22,7 @@ function LoansModal(props) {
     onCancel,
     isLoading,
     modalIsOpen,
+    getMaxInput,
     firstActionTitle,
     secondActionTitle,
     onFirstActionValidate,
@@ -94,7 +95,7 @@ function LoansModal(props) {
             <Row>
               <Col>
                 <Button
-                  color="dark"
+                  color={selectedAction === 0 ? "dark" : "secondary"}
                   id={firstActionTitle}
                   size="lg"
                   block
@@ -107,7 +108,7 @@ function LoansModal(props) {
               </Col>
               <Col>
                 <Button
-                  color="secondary"
+                  color={selectedAction === 1 ? "dark" : "secondary"}
                   id={secondActionTitle}
                   size="lg"
                   block
@@ -131,6 +132,7 @@ function LoansModal(props) {
                   />
                   <InputGroupText>$</InputGroupText>
                 </InputGroup>
+                <small>Max : {getMaxInput(selectedAction)}</small>
                 <hr className="my-4" />
                 {bToken?.rates?.map((rate) => {
                   return (
@@ -191,6 +193,7 @@ LoansModal.propTypes = {
   onFirstActionValidate: propTypes.func,
   onSecondActionValidate: propTypes.func,
   onEnableActionValidate: propTypes.func,
+  getMaxInput: propTypes.func.isRequired,
   modalIsOpen: propTypes.bool.isRequired,
   firstActionTitle: propTypes.string.isRequired,
   secondActionTitle: propTypes.string.isRequired,

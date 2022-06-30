@@ -17,7 +17,7 @@ import {
 import LoansTable from "components/Loans/LoansTable";
 
 function Loans() {
-  const { isAuthenticated, web3, isWeb3Enabled } = useMoralis();
+  const { isAuthenticated, web3, isWeb3Enabled, account } = useMoralis();
 
   const [balance, setBalance] = React.useState([]);
 
@@ -48,7 +48,7 @@ function Loans() {
       let tokens = [];
 
       for (let contract of contracts) {
-        tokens.push(await BToken.fetchBTokenInfos(web3, contract));
+        tokens.push(await BToken.fetchBTokenInfos(web3, contract, account));
       }
 
       console.log(tokens);
@@ -115,8 +115,18 @@ function Loans() {
               cardTitle="Supply"
               reloadBTokens={loadBTokens}
               cardSubtitle="Supply your assets on the BSC blockchain"
-              onFirstActionValidate={async (_, input) => {}}
-              onSecondActionValidate={async (_, input) => {}}
+              onFirstActionValidate={async (bToken, input) => {
+                BToken.mint(web3, bToken, input, account);
+              }}
+              onSecondActionValidate={async (bToken, input) => {
+                BToken.redeem(web3, bToken, input, account);
+              }}
+              getMaxInputFirstAction={(bToken) => {
+                return bToken.underlyingToken.balanceOf;
+              }}
+              getMaxInputSecondAction={(bToken) => {
+                return bToken.balanceOf;
+              }}
             />
           </Col>
 
@@ -126,8 +136,8 @@ function Loans() {
               cardTitle="Borrow"
               reloadBTokens={loadBTokens}
               cardSubtitle="Borrow assets on the BSC blockchain"
-              onFirstActionValidate={async (_, input) => {}}
-              onSecondActionValidate={async (_, input) => {}}
+              onFirstActionValidate={async (bToken, input) => {}}
+              onSecondActionValidate={async (bToken, input) => {}}
             />
           </Col>
         </Row>

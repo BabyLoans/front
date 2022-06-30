@@ -8,19 +8,22 @@ async function createBTokenInstance(web3, address) {
   return new web3.eth.Contract(BToken.abi, address);
 }
 
-async function fetchBTokenInfos(web3, bTokenContract) {
+async function fetchBTokenInfos(web3, bTokenContract, account) {
   let bToken = {};
 
   bToken.name = await bTokenContract.methods.name().call();
   bToken.symbol = await bTokenContract.methods.symbol().call();
   bToken.underlying = await bTokenContract.methods.underlying().call();
+  bToken.balanceOf = web3.utils.fromWei(
+    await bTokenContract.methods.balanceOf(account).call(),
+    "ether"
+  );
+
   bToken.rate = 0;
   // bToken.rates to store Supply and borrow rates
 
   let bep20 = await createIBEP20Instance(web3, bToken.underlying);
-  bToken.underlyingToken = await fetchIBEP20Infos(web3, bep20);
-
-  let account = (await web3.eth.getAccounts())[0];
+  bToken.underlyingToken = await fetchIBEP20Infos(web3, bep20, account);
 
   bToken.allowance = await bep20.methods
     .allowance(account, bTokenContract._address)
@@ -54,8 +57,38 @@ async function approveUnderlyingContract(web3, bTokenContract, account) {
       // eslint-disable-next-line no-undef
       .approve(bTokenContract._address, BigInt(MAX_UINT256))
       .send({ from: account })
-      .on("transactionHash", (e) => {
-        console.log(e);
+      .on("transactionHash", () => {
+        resolve(true);
+      })
+      .catch(() => {
+        reject();
+      });
+  });
+}
+
+async function mint(web3, bTokenContract, amount, account) {
+  let wei = web3.utils.toWei(amount, "ether");
+  console.log(wei);
+  return new Promise((resolve, reject) => {
+    bTokenContract.methods
+      .mint(wei)
+      .send({ from: account })
+      .on("transactionHash", () => {
+        resolve(true);
+      })
+      .catch(() => {
+        reject();
+      });
+  });
+}
+
+async function redeem(web3, bTokenContract, amount, account) {
+  let wei = web3.utils.toWei(amount, "ether");
+  return new Promise((resolve, reject) => {
+    bTokenContract.methods
+      .redeem(wei)
+      .send({ from: account })
+      .on("transactionHash", () => {
         resolve(true);
       })
       .catch(() => {
@@ -65,6 +98,8 @@ async function approveUnderlyingContract(web3, bTokenContract, account) {
 }
 
 export {
+  mint,
+  redeem,
   fetchBTokenInfos,
   createBTokenInstance,
   approveUnderlyingContract,
