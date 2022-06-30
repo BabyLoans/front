@@ -46,7 +46,8 @@ export const data = {
       label: "Daily return on investment",
       data: labels.map(() => Math.random()),
       borderColor: "rgba(83, 0, 255, 1)",
-      backgroundColor: "rgba(244, 242, 255, 1)",
+      backgroundColor: "transparent",
+      tension: 0.3
     },
   ],
 };

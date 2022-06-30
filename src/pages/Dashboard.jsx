@@ -54,13 +54,7 @@ function Dashboard() {
             <br />
             <Row>
               <Col md={6}>
-                <Card
-                  className="card-width"
-                  style={{
-                    borderRadius: "24px",
-                    backgroundColor: "rgb(30 32 49)",
-                  }}
-                >
+                <Card className="card-width">
                   <CardBody>
                     <CardTitle>
                       <h5 color="white">
@@ -75,13 +69,7 @@ function Dashboard() {
                 </Card>
               </Col>
               <Col md={6}>
-                <Card
-                  className="card-width"
-                  style={{
-                    borderRadius: "24px",
-                    backgroundColor: "rgb(30 32 49)",
-                  }}
-                >
+                <Card className="card-width">
                   <CardBody>
                     <CardTitle>
                       <h5>
@@ -102,13 +90,7 @@ function Dashboard() {
                 <br />
               </Row>
               <Col md={5}>
-                <Card
-                  className="card card-width"
-                  style={{
-                    borderRadius: "24px",
-                    backgroundColor: "rgb(30 32 49)",
-                  }}
-                >
+                <Card className="card card-width" >
                   <CardBody>
                     <CardTitle>
                       <h5>
@@ -127,13 +109,7 @@ function Dashboard() {
                 </Card>
               </Col>
               <Col md={7}>
-                <Card
-                  className="card-width"
-                  style={{
-                    borderRadius: "24px",
-                    backgroundColor: "rgb(30 32 49)",
-                  }}
-                >
+                <Card className="card-width" >
                   <CardBody>
                     <CardTitle>
                       <h5>
