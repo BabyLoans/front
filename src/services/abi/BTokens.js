@@ -14,10 +14,10 @@ async function fetchBTokenInfos(web3, bTokenContract, account) {
   bToken.name = await bTokenContract.methods.name().call();
   bToken.symbol = await bTokenContract.methods.symbol().call();
   bToken.underlying = await bTokenContract.methods.underlying().call();
-  bToken.balanceOf = web3.utils.fromWei(
-    await bTokenContract.methods.balanceOf(account).call(),
-    "ether"
-  );
+
+  let accountInfo = await bTokenContract.methods.getAccountInfo(account).call();
+  bToken.balanceOf = web3.utils.fromWei(accountInfo[1], "ether");
+  bToken.balanceOfBorrow = web3.utils.fromWei(accountInfo[2], "ether");
 
   bToken.rate = 0;
   // bToken.rates to store Supply and borrow rates
@@ -96,9 +96,42 @@ async function redeem(web3, bTokenContract, amount, account) {
   });
 }
 
+async function borrow(web3, bTokenContract, amount, account) {
+  let wei = web3.utils.toWei(amount.toString(), "ether");
+  console.log(wei);
+  return new Promise((resolve, reject) => {
+    bTokenContract.methods
+      .borrow(wei)
+      .send({ from: account })
+      .on("transactionHash", () => {
+        resolve(true);
+      })
+      .catch(() => {
+        reject();
+      });
+  });
+}
+
+async function repayBorrow(web3, bTokenContract, amount, account) {
+  let wei = web3.utils.toWei(amount.toString(), "ether");
+  return new Promise((resolve, reject) => {
+    bTokenContract.methods
+      .repayBorrow(wei)
+      .send({ from: account })
+      .on("transactionHash", () => {
+        resolve(true);
+      })
+      .catch(() => {
+        reject();
+      });
+  });
+}
+
 export {
   mint,
   redeem,
+  borrow,
+  repayBorrow,
   fetchBTokenInfos,
   createBTokenInstance,
   approveUnderlyingContract,

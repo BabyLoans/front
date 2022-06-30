@@ -45,7 +45,6 @@ function Loans() {
       for (let contract of contracts) {
         tokens.push(await BToken.fetchBTokenInfos(web3, contract, account));
       }
-      console.log(tokens);
 
       setBTokens(tokens);
       setIsLoading(false);
@@ -65,10 +64,19 @@ function Loans() {
 
   const loadBTokensAccountInfo = async () => {
     if (isLoading || isWeb3Enabled) {
-      let bTokensAccountInfo = await Comptroller.getBTokensAccountInfo(web3, account);
+      let bTokensAccountInfo = await Comptroller.getBTokensAccountInfo(
+        web3,
+        account
+      );
       setBalanceByBTokens(bTokensAccountInfo);
       setIsLoading(false);
     }
+  };
+
+  const reloadPage = () => {
+    loadBTokens();
+    loadAccountInfo();
+    loadBTokensAccountInfo();
   };
 
   return (
@@ -98,7 +106,9 @@ function Loans() {
                             />
                           </Col>
                           <Col xs={8}>
-                            <BalanceSupplyBorrowChart datas={balanceByBTokens} />
+                            <BalanceSupplyBorrowChart
+                              datas={balanceByBTokens}
+                            />
                           </Col>
                           <Col xs={2}>
                             <h5>Your borrow</h5>
@@ -135,13 +145,15 @@ function Loans() {
             <LoansTable
               bTokens={bTokens}
               cardTitle="Supply"
-              reloadBTokens={loadBTokens}
+              firstActionTitle="SUPPLY"
+              reloadBTokens={reloadPage}
+              secondActionTitle="WITHDRAW"
               cardSubtitle="Supply your assets on the BSC blockchain"
               onFirstActionValidate={async (bToken, input) => {
-                BToken.mint(web3, bToken.contract, input, account);
+                await BToken.mint(web3, bToken.contract, input, account);
               }}
               onSecondActionValidate={async (bToken, input) => {
-                BToken.redeem(web3, bToken.contract, input, account);
+                await BToken.redeem(web3, bToken.contract, input, account);
               }}
               getMaxInputFirstAction={(bToken) => {
                 return bToken.underlyingToken.balanceOf;
@@ -156,10 +168,22 @@ function Loans() {
             <LoansTable
               bTokens={bTokens}
               cardTitle="Borrow"
-              reloadBTokens={loadBTokens}
+              reloadBTokens={reloadPage}
+              firstActionTitle="BORROW"
+              secondActionTitle="REPAY"
               cardSubtitle="Borrow assets on the BSC blockchain"
-              onFirstActionValidate={async (bToken, input) => {}}
-              onSecondActionValidate={async (bToken, input) => {}}
+              onFirstActionValidate={async (bToken, input) => {
+                await BToken.borrow(web3, bToken.contract, input, account);
+              }}
+              onSecondActionValidate={async (bToken, input) => {
+                await BToken.repayBorrow(web3, bToken.contract, input, account);
+              }}
+              getMaxInputFirstAction={(bToken) => {
+                return accountInfo.supply * 0.7;
+              }}
+              getMaxInputSecondAction={(bToken) => {
+                return bToken.balanceOfBorrow;
+              }}
             />
           </Col>
         </Row>

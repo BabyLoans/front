@@ -29,7 +29,8 @@ export const getEllipsisTxt = (str, n = 6) => {
   return "";
 };
 
-export const tokenValue = (value, decimals) => (decimals ? value / Math.pow(10, decimals) : value);
+export const tokenValue = (value, decimals) =>
+  decimals ? value / Math.pow(10, decimals) : value;
 
 /**
  * Return a formatted string with the symbol at the end
@@ -38,7 +39,5 @@ export const tokenValue = (value, decimals) => (decimals ? value / Math.pow(10, 
  * @param {string} symbol token symbol
  * @returns {string}
  */
-export const tokenValueTxt = (value, decimals, symbol) => `${n4.format(tokenValue(value, decimals))} ${symbol}`;
-
-// eslint-disable-next-line no-undef
-export const parseWeiToETH = (web3, amount) => amount == 0 ? parseInt(web3.utils.fromWei(amount, "ether")) : BigInt(web3.utils.fromWei(amount, "ether"));
+export const tokenValueTxt = (value, decimals, symbol) =>
+  `${n4.format(tokenValue(value, decimals))} ${symbol}`;

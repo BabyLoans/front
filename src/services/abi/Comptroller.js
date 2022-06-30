@@ -1,6 +1,5 @@
 import { createBTokenInstance } from "./BTokens";
 import Comptroller from "contracts/Comptroller.json";
-import { parseWeiToETH } from "helpers/formatters";
 
 async function createComptrollerInstance(web3) {
   let networkId = await web3.eth.net.getId();
@@ -34,8 +33,8 @@ async function getAccountInfo(web3, address) {
   let totalBorrow = 0;
   for (let bToken of bTokens) {
     let account = await bToken.methods.getAccountInfo(address).call();
-    totalSupply += parseWeiToETH(web3, account[1]); 
-    totalBorrow += parseWeiToETH(web3, account[2]);
+    totalSupply += parseInt(web3.utils.fromWei(account[1], "ether"));
+    totalBorrow += parseInt(web3.utils.fromWei(account[2], "ether"));
   }
 
   return {
@@ -44,16 +43,20 @@ async function getAccountInfo(web3, address) {
   };
 }
 
-
 async function getBTokensAccountInfo(web3, address) {
   let bTokens = await fetchBTokenContracts(web3);
   let tab = {};
   for (let bToken of bTokens) {
     let account = await bToken.methods.getAccountInfo(address).call();
     let symbol = await bToken.methods.symbol().call();
-    tab[symbol] = parseWeiToETH(web3, account[1]);
+    tab[symbol] = parseInt(web3.utils.fromWei(account[1], "ether"));
   }
   return tab;
 }
 
-export { createComptrollerInstance, fetchBTokenContracts, getAccountInfo, getBTokensAccountInfo };
+export {
+  createComptrollerInstance,
+  fetchBTokenContracts,
+  getAccountInfo,
+  getBTokensAccountInfo,
+};

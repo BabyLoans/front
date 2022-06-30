@@ -13,6 +13,8 @@ function LoansTable(props) {
     cardTitle,
     cardSubtitle,
     reloadBTokens,
+    firstActionTitle,
+    secondActionTitle,
     onFirstActionValidate,
     onSecondActionValidate,
     getMaxInputFirstAction,
@@ -29,6 +31,7 @@ function LoansTable(props) {
   React.useEffect(() => {
     if (bTokensIsReloading) {
       reloadBTokens();
+      setBTokensIsReloading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bTokensIsReloading]);
@@ -69,8 +72,8 @@ function LoansTable(props) {
 
           return getMaxInputSecondAction(modalBToken);
         }}
-        firstActionTitle="SUPPLY"
-        secondActionTitle="WITHDRAW"
+        firstActionTitle={firstActionTitle}
+        secondActionTitle={secondActionTitle}
         onCancel={() => {
           setModalIsOpen(false);
           setModalIsLoading(false);
@@ -123,6 +126,8 @@ LoansTable.propTypes = {
   cardTitle: propTypes.string.isRequired,
   reloadBTokens: propTypes.func.isRequired,
   cardSubtitle: propTypes.string.isRequired,
+  firstActionTitle: propTypes.string.isRequired,
+  secondActionTitle: propTypes.string.isRequired,
   getMaxInputFirstAction: propTypes.func.isRequired,
   getMaxInputSecondAction: propTypes.func.isRequired,
 };
