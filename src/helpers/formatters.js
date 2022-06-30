@@ -39,3 +39,6 @@ export const tokenValue = (value, decimals) => (decimals ? value / Math.pow(10, 
  * @returns {string}
  */
 export const tokenValueTxt = (value, decimals, symbol) => `${n4.format(tokenValue(value, decimals))} ${symbol}`;
+
+// eslint-disable-next-line no-undef
+export const parseWeiToETH = (web3, amount) => amount == 0 ? parseInt(web3.utils.fromWei(amount, "ether")) : BigInt(web3.utils.fromWei(amount, "ether"));
