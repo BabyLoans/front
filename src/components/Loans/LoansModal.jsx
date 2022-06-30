@@ -124,6 +124,7 @@ function LoansModal(props) {
               <CardBody>
                 <InputGroup className="mt-2">
                   <Input
+                    value={inputValue}
                     type="number"
                     style={{ width: "25%" }}
                     onChange={(event) => {
@@ -131,8 +132,16 @@ function LoansModal(props) {
                     }}
                   />
                   <InputGroupText>$</InputGroupText>
-                </InputGroup>
-                <small>Max : {getMaxInput(selectedAction)}</small>
+                </InputGroup><br />
+                <small>
+                  Max : {getMaxInput(selectedAction)}
+                </small> { ' ' }
+                <Button size="sm" onClick={() => {
+                    setInputValue(getMaxInput(selectedAction))
+                  }}
+                >
+                  Max
+                </Button>
                 <hr className="my-4" />
                 {bToken?.rates?.map((rate) => {
                   return (
