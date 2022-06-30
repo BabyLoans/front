@@ -11,7 +11,6 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import propTypes from 'prop-types';
 
 ChartJS.register(
   CategoryScale,
@@ -52,7 +51,7 @@ export const data = {
 };
 
 function DailyProfitChart() {
-  return <Line options={options} data={data} height={"100%"} options={{ maintainAspectRatio: false }}/>;
+  return <Line options={options} data={data} height={"100%"} options={{ maintainAspectRatio: true }}/>;
 }
 
 

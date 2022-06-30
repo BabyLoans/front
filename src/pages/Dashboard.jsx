@@ -3,8 +3,8 @@ import { useMoralis } from "react-moralis";
 import Balance from "components/Dashboard/Balance";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBalanceScale, faHandHoldingUsd, faCalendarCheck, faWallet } from "@fortawesome/free-solid-svg-icons";
-import { Container, Card, CardBody, CardSubtitle, CardTitle, Row, Col, Spinner } from "reactstrap";
-import DailyProfit from "components/Charts/DailyProfitChart"; 
+import { Container, Card, CardBody, CardTitle, Row, Col, Spinner } from "reactstrap";
+import DailyProfit from "components/Dashboard/DailyProfit"; 
 import BestSupplyRate from "components/Dashboard/BestSupplyRate";
 import InvestmentStats from "components/Dashboard/InvestmentStats";
 import { BestSupplyRates, UserInvestmentStats } from "services";
@@ -60,7 +60,7 @@ function Dashboard() {
                 <CardBody>
                   <CardTitle><h5> <FontAwesomeIcon icon={faWallet} /> Investment Stats</h5></CardTitle>
                   <p>Statistics of your return on investment</p><br />
-                  <InvestmentStats datas={investmentStats} />
+                  <InvestmentStats datas={investmentStats} isAuthenticated={isAuthenticated}/>
                 </CardBody>
               </Card>
             </Col>
@@ -86,7 +86,7 @@ function Dashboard() {
                   <CardTitle><h5><FontAwesomeIcon icon={faCalendarCheck} /> Daily Profits</h5></CardTitle>
                   <p>Graphical representation of your daily returns</p><br />
                   <Row>
-                    <DailyProfit/>
+                    <DailyProfit isAuthenticated={isAuthenticated} />
                   </Row>
                 </CardBody>
               </Card>

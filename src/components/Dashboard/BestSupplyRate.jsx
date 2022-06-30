@@ -1,6 +1,6 @@
 import React from "react";
 import propTypes from "prop-types";
-import { Row, Col, Badge } from "reactstrap";
+import { Row, Col } from "reactstrap";
 import BestSupplyRateChart from "components/Charts/BestSupplyRateChart";
 
 function buildDatasetsFromDatas(datas) {
