@@ -23,7 +23,6 @@ function buildDatasetsFromDatas(datas) {
     ],
   };
 
-  console.log("data", datas)
   for (let property in datas) {
     datasets.labels.push(property);
     datasets.datasets[0].data.push(datas[property]);
