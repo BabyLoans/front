@@ -1,5 +1,6 @@
 import React from "react";
 import propTypes from "prop-types";
+import { Alert } from "reactstrap";
 import BalanceChart from "components/Charts/BalanceChart";
 import { useERC20Balances } from "react-moralis";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -43,30 +44,26 @@ function buildDatasetsFromDatas(datas) {
 
 function Balance(props) {
   const { isAuthenticated } = props;
-  const [isVisibleChart, setIsVisibleChart] = React.useState(false);
   const { data, isLoading } = useERC20Balances();
   const [datasets, setDatasets] = React.useState();
+  const [isVisibleChart, setIsVisibleChart] = React.useState(false);
 
   React.useEffect(() => {
     if (!isLoading) {
       let datasetsTmp = buildDatasetsFromDatas(data);
       setDatasets(datasetsTmp);
-      if (datasetsTmp.datasets[0].data.length > 0) {
-        setIsVisibleChart(true);
-      } else {
-        setIsVisibleChart(false);
-      }
+      setIsVisibleChart(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
 
   return (
     <>
-      {!isVisibleChart || !isAuthenticated ? (
+      {!isAuthenticated ? (
         <>
-          <center>
-            <FontAwesomeIcon icon={faWallet} /> Wallet not connected or empty
-          </center>
+          <Alert color="danger">
+            <FontAwesomeIcon icon={faWallet} /> Wallet not connected
+          </Alert>
         </>
       ) : (
         <div style={styles.root}>

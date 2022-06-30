@@ -44,17 +44,21 @@ function BorrowTable(props) {
         modalIsOpen={modalIsOpen}
         firstActionTitle="BORROW"
         secondActionTitle="REPAY"
+        isLoading={modalIsLoading}
         validateButtonText="Borrowing"
         onCancel={() => {
           setModalIsOpen(false);
+          setModalIsLoading(false);
         }}
         onFirstActionValidate={() => {
           // Call smart contract
           setModalIsOpen(false);
+          setModalIsLoading(false);
         }}
         onSecondActionValidate={() => {
           // Call smart contract
           setModalIsOpen(false);
+          setModalIsLoading(false);
         }}
       />
     </>

@@ -72,21 +72,14 @@ function Account() {
             padding: "15px",
             fontSize: "17px",
             fontWeight: "500",
+            backgroundColor: "rgb(30, 32, 49)",
           }}
           style={{ fontSize: "16px", fontWeight: "500" }}
           width="340px"
         >
-          <div
-            style={{
-              padding: "10px",
-              display: "flex",
-              justifyContent: "center",
-              fontWeight: "700",
-              fontSize: "20px",
-            }}
-          >
+          <h5 style={{ display: "flex", justifyContent: "center" }}>
             Connect Wallet
-          </div>
+          </h5>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
             {connectors.map(({ title, icon, connectorId }, key) => (
               <div

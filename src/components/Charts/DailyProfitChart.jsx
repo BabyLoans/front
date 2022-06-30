@@ -33,7 +33,7 @@ export const options = {
       display: false,
     },
   },
-  maintainAspectRatio: false,
+  maintainAspectRatio: true,
 };
 
 const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];

@@ -64,6 +64,7 @@ function SupplyTable(props) {
       <LoansModal
         bToken={modalBToken}
         modalIsOpen={modalIsOpen}
+        isLoading={modalIsLoading}
         firstActionTitle="SUPPLY"
         secondActionTitle="WITHDRAW"
         validateButtonText={modalValidateButtonText}

@@ -4,7 +4,6 @@ import Balance from "components/Dashboard/Balance";
 import DailyProfit from "components/Charts/DailyProfitChart";
 import { BestSupplyRates, UserInvestmentStats } from "services";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import BestSupplyRate from "components/Dashboard/BestSupplyRate";
 import InvestmentStats from "components/Dashboard/InvestmentStats";
 import {
   faBalanceScale,
@@ -21,6 +20,7 @@ import {
   Col,
   Spinner,
 } from "reactstrap";
+import BestSupplyRate from "components/Dashboard/BestSupplyRate";
 
 function Dashboard() {
   const { isAuthenticated } = useMoralis();
@@ -91,7 +91,10 @@ function Dashboard() {
                     </CardTitle>
                     <p>Statistics of your return on investment</p>
                     <br />
-                    <InvestmentStats datas={investmentStats} />
+                    <InvestmentStats
+                      datas={investmentStats}
+                      isAuthenticated={isAuthenticated}
+                    />
                   </CardBody>
                 </Card>
               </Col>
@@ -140,7 +143,7 @@ function Dashboard() {
                     <p>Graphical representation of your daily returns</p>
                     <br />
                     <Row>
-                      <DailyProfit />
+                      <DailyProfit isAuthenticated={isAuthenticated} />
                     </Row>
                   </CardBody>
                 </Card>
