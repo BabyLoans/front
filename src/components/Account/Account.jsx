@@ -25,7 +25,7 @@ const styles = {
     cursor: "pointer",
   },
   text: {
-    color: "#21BF96",
+    color: "white",
     margin: "0px 10px",
   },
   connector: {
@@ -56,7 +56,7 @@ function Account() {
   if (!isAuthenticated || !account) {
     return (
       <>
-        <Button color="dark" size="sm" onClick={() => setIsAuthModalVisible(true)}> 
+        <Button style={{ backgroundColor: "#e14eca"}} size="sm" onClick={() => setIsAuthModalVisible(true)}> 
           <FontAwesomeIcon icon={faWallet} /> Connect Wallet
         </Button>
         <Modal
@@ -101,10 +101,10 @@ function Account() {
 
   return (
     <>
-      <Button color="dark" size="sm" onClick={() => setIsModalVisible(true)}>
-        <p style={{ marginRight: "5px", display: "inline", ...styles.text }}>{getEllipsisTxt(account, 6)} 
+      <Button style={{ backgroundColor: "#e14eca"}} size="sm" onClick={() => setIsModalVisible(true)}>
+        <h6 style={{ marginRight: "5px", display: "inline", ...styles.text }}>{getEllipsisTxt(account, 6)} 
           { ' ' } <Blockie currentWallet scale={2} />
-        </p>
+        </h6>
       </Button>
       <Modal
         visible={isModalVisible}
@@ -113,27 +113,15 @@ function Account() {
         bodyStyle={{
           padding: "15px",
           fontSize: "17px",
-          fontWeight: "500",
+          backgroundColor: "rgb(30, 32, 49)",
         }}
-        style={{ fontSize: "16px", fontWeight: "500" }}
-        width="400px"
       >
-        Account
-        <Card
-          style={{
-            marginTop: "10px",
-            borderRadius: "1rem",
-          }}
-          bodyStyle={{ padding: "15px" }}
-        >
-          <Address avatar="left" size={6} copyable style={{ fontSize: "20px" }} />
-          <div style={{ marginTop: "10px", padding: "0 10px" }}>
-            <a href={`${getExplorer(chainId)}/address/${account}`} target="_blank" rel="noreferrer">
-              <SelectOutlined style={{ marginRight: "5px" }} />
-              View on Explorer
-            </a>
-          </div>
-        </Card>
+        <h5>Account</h5><br />
+        <Address avatar="left" size={6} copyable style={{ fontSize: "20px" }} />
+        <a href={`${getExplorer(chainId)}/address/${account}`} target="_blank" rel="noreferrer">
+          <SelectOutlined style={{ marginRight: "5px" }} />
+          View on Explorer
+        </a>
         <Button
           size="large"
           type="primary"
@@ -143,6 +131,7 @@ function Account() {
             borderRadius: "0.5rem",
             fontSize: "16px",
             fontWeight: "500",
+            backgroundColor: "#e14eca"
           }}
           onClick={async () => {
             await logout();

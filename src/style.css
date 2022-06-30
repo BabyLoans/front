@@ -14,11 +14,6 @@
   color: #21bf96 !important;
 }
 
-.ant-modal-content {
-  overflow: auto;
-  border-radius: 1rem;
-}
-
 .card-spacing {
   margin-bottom: 1.5vh;
 }
@@ -30,33 +25,12 @@
 
 .card-width {
   height: 100%;
-}
-
-.investment-stat-card-title {
-  font-family: "Verdana";
-  font-weight: bolder;
-  margin-bottom: 0;
+  background-color: rgb(40, 41, 49);
+  border-radius: 24px;
 }
 
 .investment-stat-col {
   margin-left: 2em;
-}
-
-.dashboard-balance-card {
-  width: "100%";
-  border-radius: "5px";
-}
-
-.ant-typography.dashboard-title-card {
-  font-family: "Verdana";
-  font-weight: bolder;
-  font-size: 17px;
-}
-
-.dashboard-card {
-  width: "100%";
-  padding: "8px 0";
-  border-radius: "5px";
 }
 
 .best-supply-rate-image {

@@ -45,29 +45,31 @@ function Dashboard() {
           <br />
           <Row>
             <Col md={6}> 
-              <Card className="card-width">
+              <Card className="card-width" style={{ borderRadius: "24px", backgroundColor: "rgb(30 32 49)"}}>
                 <CardBody>
-                  <CardTitle><h5> <FontAwesomeIcon icon={faBalanceScale} /> Balance</h5></CardTitle>
-                  <CardSubtitle className="mb-2 text-muted">Overview of your wallet</CardSubtitle><br />
+                  <CardTitle>
+                    <h5 color="white"> <FontAwesomeIcon icon={faBalanceScale} /> Balance</h5>
+                  </CardTitle>
+                  <p>Overview of your wallet</p><br />
                   <Balance isAuthenticated={isAuthenticated}/>
                 </CardBody>
               </Card>
             </Col>
             <Col md={6}> 
-              <Card className="card-width">
+              <Card className="card-width" style={{ borderRadius: "24px", backgroundColor: "rgb(30 32 49)"}}>
                 <CardBody>
                   <CardTitle><h5> <FontAwesomeIcon icon={faWallet} /> Investment Stats</h5></CardTitle>
-                  <CardSubtitle className="mb-2 text-muted">Statistics of your return on investment</CardSubtitle><br />
+                  <p>Statistics of your return on investment</p><br />
                   <InvestmentStats datas={investmentStats} />
                 </CardBody>
               </Card>
             </Col>
             <Row><br /></Row>
             <Col md={5}> 
-              <Card className="card-width">
+              <Card className="card card-width" style={{ borderRadius: "24px", backgroundColor: "rgb(30 32 49)"}}>
                 <CardBody>
                   <CardTitle><h5><FontAwesomeIcon icon={faHandHoldingUsd} /> Best supply rates</h5></CardTitle>
-                  <CardSubtitle className="mb-2 text-muted">Overview of the best returns on assets</CardSubtitle><br />
+                  <p>Overview of the best returns on assets</p><br />
                   <Row>
                     {bestSupplyRates.map((token) => {
                       return (
@@ -79,10 +81,10 @@ function Dashboard() {
               </Card>
             </Col>
             <Col md={7}> 
-              <Card className="card-width">
+              <Card className="card-width" style={{ borderRadius: "24px", backgroundColor: "rgb(30 32 49)"}}>
                 <CardBody>
                   <CardTitle><h5><FontAwesomeIcon icon={faCalendarCheck} /> Daily Profits</h5></CardTitle>
-                  <CardSubtitle className="mb-2 text-muted">Graphical representation of your daily returns</CardSubtitle><br />
+                  <p>Graphical representation of your daily returns</p><br />
                   <Row>
                     <DailyProfit/>
                   </Row>

@@ -41,12 +41,10 @@ function BestSupplyRate(props) {
           {datas.symbol}
         </Col>
         <Col md={8}>
-          <Badge color="dark" style={{ display: "block" }}>
-            <BestSupplyRateChart data={datasets} />
-            <span className="best-supply-rate-percent">
-              {datas.rates[0].value} %
-            </span>
-          </Badge>
+          <BestSupplyRateChart data={datasets} />
+          <span className="best-supply-rate-percent">
+            {datas.rates[0].value} %
+          </span>
         </Col>
       </Row>
     </>
