@@ -63,10 +63,7 @@ function Loans() {
         <br />
         <Row>
           <Col md={12}>
-            <Card
-              className="card-width"
-              style={{ borderRadius: "24px", backgroundColor: "rgb(30 32 49)" }}
-            >
+            <Card className="card-width">
               <CardBody>
                 <Row>
                   {isAuthenticated ? (

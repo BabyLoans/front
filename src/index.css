@@ -66,3 +66,17 @@ textarea,
 select {
   font: inherit;
 }
+
+.modal-content {
+  background-color: rgb(30 32 49);
+  border-radius: 24px;
+}
+
+.card {
+  background-color: rgb(30 32 49);
+  border-radius: 24px;
+}
+
+.btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}

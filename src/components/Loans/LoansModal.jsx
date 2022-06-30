@@ -153,7 +153,7 @@ function LoansModal(props) {
           </>
         ) : (
           <>
-            <p className="text-black">
+            <p>
               To {selectedAction === 0 ? firstActionTitle : secondActionTitle}{" "}
               {bToken?.underlyingToken.symbol} to the BabyLoans Protocol, you
               need to enable it first
