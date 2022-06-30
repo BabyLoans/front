@@ -1,6 +1,9 @@
 import BToken from "contracts/BToken.json";
 import { createIBEP20Instance, fetchIBEP20Infos } from "./IBEP20.js";
 
+const MAX_UINT256 =
+  "115792089237316195423570985008687907853269984665640564039457584007913129639935";
+
 async function createBTokenInstance(web3, address) {
   return new web3.eth.Contract(BToken.abi, address);
 }
@@ -20,7 +23,7 @@ async function fetchBTokenInfos(web3, bTokenContract) {
   let account = (await web3.eth.getAccounts())[0];
 
   bToken.allowance = await bep20.methods
-    .allowance(bTokenContract._address, account)
+    .allowance(account, bTokenContract._address)
     .call();
 
   bToken.contract = bTokenContract;
@@ -37,7 +40,7 @@ async function totalAllowanceUnderlyingContract(web3, bTokenContract) {
 
   let account = (await web3.eth.getAccounts())[0];
 
-  return bep20.methods.allowance(bTokenContract._address, account).call();
+  return bep20.methods.allowance(account, bTokenContract._address).call();
 }
 
 async function approveUnderlyingContract(web3, bTokenContract, account) {
@@ -46,9 +49,19 @@ async function approveUnderlyingContract(web3, bTokenContract, account) {
     .call();
   let bep20 = await createIBEP20Instance(web3, underlyingContractAddress);
 
-  await bep20.methods
-    .approve(bTokenContract.address, 2 ** 256 - 1)
-    .send({ from: account });
+  return new Promise((resolve, reject) => {
+    bep20.methods
+      // eslint-disable-next-line no-undef
+      .approve(bTokenContract._address, BigInt(MAX_UINT256))
+      .send({ from: account })
+      .on("transactionHash", (e) => {
+        console.log(e);
+        resolve(true);
+      })
+      .catch(() => {
+        reject();
+      });
+  });
 }
 
 export {

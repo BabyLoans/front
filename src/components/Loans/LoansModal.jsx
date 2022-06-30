@@ -131,7 +131,7 @@ function LoansModal(props) {
                   />
                   <InputGroupText>$</InputGroupText>
                 </InputGroup>
-                <hr class="my-4"></hr>
+                <hr className="my-4" />
                 {bToken?.rates?.map((rate) => {
                   return (
                     <Row>

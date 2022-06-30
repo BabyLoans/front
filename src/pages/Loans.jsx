@@ -27,19 +27,7 @@ function Loans() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(async () => {
-    if (isLoading || isWeb3Enabled) {
-      let contracts = await Comptroller.fetchBTokenContracts(web3);
-
-      let tokens = [];
-
-      for (let contract of contracts) {
-        tokens.push(await BToken.fetchBTokenInfos(web3, contract));
-      }
-
-      console.log(tokens);
-
-      setBTokens(tokens);
-    }
+    loadBTokens();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, isWeb3Enabled]);
 
@@ -53,6 +41,22 @@ function Loans() {
       });
     }
   }, [isLoading]);
+
+  const loadBTokens = async () => {
+    if (isLoading || isWeb3Enabled) {
+      let contracts = await Comptroller.fetchBTokenContracts(web3);
+
+      let tokens = [];
+
+      for (let contract of contracts) {
+        tokens.push(await BToken.fetchBTokenInfos(web3, contract));
+      }
+
+      console.log(tokens);
+
+      setBTokens(tokens);
+    }
+  };
 
   return (
     <>
@@ -110,7 +114,7 @@ function Loans() {
         </Row>
         <Row>
           <Col md={6}>
-            <SupplyTable bTokens={bTokens} />
+            <SupplyTable bTokens={bTokens} reloadBTokens={loadBTokens} />
           </Col>
 
           <Col md={6}>
