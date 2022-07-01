@@ -1,10 +1,11 @@
 import React from "react";
 import propTypes from "prop-types";
 import { Alert } from "reactstrap";
+import { useMoralis } from "react-moralis";
+import { Comptroller, BToken } from "services";
 import BalanceChart from "components/Charts/BalanceChart";
-import { useERC20Balances } from "react-moralis";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWallet } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const margin = { left: 0, right: 100 };
 
@@ -27,37 +28,45 @@ function buildDatasetsFromDatas(datas) {
     ],
   };
 
+  console.log(datas);
+
   if (datas !== null) {
     for (let data of datas) {
-      datasets.labels.push(data.name);
-      datasets.datasets[0].data.push(
-        parseFloat(data.balance).toFixed(data.decimal)
-      );
+      datasets.labels.push(data.underlyingToken.symbol);
+      datasets.datasets[0].data.push(data.underlyingToken.balanceOf);
       datasets.datasets[0].backgroundColor.push(
         "#" + Math.random().toString(16).substr(-6)
       );
     }
   }
 
+  console.log(datasets);
+
   return datasets;
 }
 
 function Balance(props) {
   const { isAuthenticated } = props;
-  const { data, isLoading } = useERC20Balances();
+  const { web3, isWeb3Enabled, isWeb3EnableLoading, account } = useMoralis();
   const [datasets, setDatasets] = React.useState();
   const [isVisibleChart, setIsVisibleChart] = React.useState(false);
 
-  React.useEffect(() => {
-    if (!isLoading) {
-      let datasetsTmp = buildDatasetsFromDatas(data);
-      setDatasets(datasetsTmp);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  React.useEffect(async () => {
+    if (isWeb3Enabled && !isWeb3EnableLoading) {
+      let bTokens = await Comptroller.fetchBTokenContracts(web3);
+
+      let datas = [];
+
+      for (let bToken of bTokens) {
+        datas.push(await BToken.fetchBTokenInfos(web3, bToken, account));
+      }
+
+      setDatasets(buildDatasetsFromDatas(datas));
       setIsVisibleChart(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
-
-  
+  }, [isWeb3Enabled, isWeb3EnableLoading]);
 
   return (
     <>
