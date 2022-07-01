@@ -17,7 +17,8 @@ import {
 import LoansTable from "components/Loans/LoansTable";
 
 function Loans() {
-  const { isAuthenticated, web3, isWeb3Enabled, account } = useMoralis();
+  const { isAuthenticated, web3, isWeb3Enabled, isWeb3EnableLoading, account } =
+    useMoralis();
 
   const [balanceByBTokens, setBalanceByBTokens] = React.useState([]);
 
@@ -34,10 +35,10 @@ function Loans() {
     loadAccountInfo();
     loadBTokensAccountInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, isWeb3Enabled]);
+  }, [isWeb3Enabled, isWeb3EnableLoading]);
 
   const loadBTokens = async () => {
-    if (isLoading || isWeb3Enabled) {
+    if (isWeb3Enabled && !isWeb3EnableLoading) {
       let contracts = await Comptroller.fetchBTokenContracts(web3);
 
       let tokens = [];
@@ -52,7 +53,7 @@ function Loans() {
   };
 
   const loadAccountInfo = async () => {
-    if (isLoading || isWeb3Enabled) {
+    if (isWeb3Enabled && !isWeb3EnableLoading) {
       let accountUser = await Comptroller.getAccountInfo(web3, account);
       setAccountInfo({
         supply: accountUser["supply"],
@@ -63,7 +64,7 @@ function Loans() {
   };
 
   const loadBTokensAccountInfo = async () => {
-    if (isLoading || isWeb3Enabled) {
+    if (isWeb3Enabled && !isWeb3EnableLoading) {
       let bTokensAccountInfo = await Comptroller.getBTokensAccountInfo(
         web3,
         account
@@ -116,7 +117,7 @@ function Loans() {
                             <Progress
                               color="success"
                               value={accountInfo.borrow}
-                              max={5000}
+                              max={accountInfo.supply * 0.7}
                             />
                           </Col>
                         </>
@@ -179,7 +180,7 @@ function Loans() {
                 await BToken.repayBorrow(web3, bToken.contract, input, account);
               }}
               getMaxInputFirstAction={(bToken) => {
-                return accountInfo.supply * 0.7;
+                return accountInfo.supply * 0.7 - accountInfo.borrow;
               }}
               getMaxInputSecondAction={(bToken) => {
                 return bToken.balanceOfBorrow;

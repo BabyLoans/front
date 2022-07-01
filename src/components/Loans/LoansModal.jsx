@@ -48,16 +48,17 @@ function LoansModal(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCanceling]);
 
-  React.useEffect(() => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  React.useEffect(async () => {
     if (isValidating) {
       if (isEnabledToken) {
         if (selectedAction === 0) {
-          onFirstActionValidate(inputValue);
+          await onFirstActionValidate(inputValue);
         } else {
-          onSecondActionValidate(inputValue);
+          await onSecondActionValidate(inputValue);
         }
       } else {
-        onEnableActionValidate();
+        await onEnableActionValidate();
       }
       setIsValidating(false);
     }
@@ -71,6 +72,12 @@ function LoansModal(props) {
     }
     setIsEnabledToken(false);
   }, [bToken]);
+
+  React.useEffect(() => {
+    if (!modalIsOpen) {
+      setInputValue(0);
+    }
+  }, [modalIsOpen]);
 
   return (
     <Modal isOpen={modalIsOpen} modalTransition={{ timeout: 250 }}>
@@ -132,12 +139,13 @@ function LoansModal(props) {
                     }}
                   />
                   <InputGroupText>$</InputGroupText>
-                </InputGroup><br />
-                <small>
-                  Max : {getMaxInput(selectedAction)}
-                </small> { ' ' }
-                <Button size="sm" onClick={() => {
-                    setInputValue(getMaxInput(selectedAction))
+                </InputGroup>
+                <br />
+                <small>Max : {getMaxInput(selectedAction)}</small>{" "}
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    setInputValue(getMaxInput(selectedAction));
                   }}
                 >
                   Max
